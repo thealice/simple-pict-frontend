@@ -4,7 +4,8 @@ const themesArr = [];
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    getThemes();
+    console.log(getThemes());
+    console.log(getAllPrompts());
     // ask what theme and team names
     // then fetch prompts from that theme
     // should i getThemes() and getPrompts() separately and store them
@@ -23,6 +24,18 @@ function getThemes() {
         })
     })
     return themesArr;
+}
+
+
+function getAllPrompts() {
+    fetch(`${baseURL}prompts`)
+    .then(res => res.json())
+    .then(prompts => {
+        prompts.data.forEach(prompt => {
+            promptsArr.push(prompt.attributes.content)
+        })
+    })
+    return promptsArr;
 }
 
 // function getPrompts() {
