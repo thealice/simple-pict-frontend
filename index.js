@@ -1,13 +1,14 @@
 const baseURL = "http://localhost:3000/api/v1/";
-const promptsArr = [];
-const themesArr = [];
-
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log(getThemes());
-    console.log(getAllPrompts());
+    getThemes();
+
+    // load theme names into form for users to select a theme or no theme
+
     // ask what theme and team names
     // then fetch prompts from that theme
+    // or get all prompts if user selects "none"
+        // getAllPrompts();
     // should i getThemes() and getPrompts() separately and store them
     // load instructions and team names form
     // show team name whose turn it is and begin gameplay button
@@ -15,19 +16,21 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function getThemes() {
-
+    const themesArr = [];
     fetch(`${baseURL}themes`)
     .then(res => res.json())
     .then(themes => {
         themes.data.forEach(theme => {
-            themesArr.push(theme.attributes.name)
+            let themeObj = new Theme(theme.attributes.name, theme.attributes.prompts)
+            themesArr.push(themeObj)
         })
     })
-    return themesArr;
+    return(themesArr);
 }
 
 
 function getAllPrompts() {
+    const promptsArr = [];
     fetch(`${baseURL}prompts`)
     .then(res => res.json())
     .then(prompts => {
@@ -38,16 +41,11 @@ function getAllPrompts() {
     return promptsArr;
 }
 
-// function getPrompts() {
-//     fetch(endPoint)
-//     .then(res => res.json())
-//     .then(prompts => {
-//         prompts.data.map(prompt => {
-//             promptsArr.push(prompt.attributes.content)
-//             // should i make separate arrays for each theme here?
-//         })
-//         console.log(promptsArr);
-//     })
-// }
-
 // JS Classes
+
+class Theme {
+    constructor(name, themePrompts) {
+        this.name = name;
+        this.prompts = themePrompts
+    }
+}
