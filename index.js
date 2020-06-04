@@ -26,17 +26,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function getThemes() {
-    const themesArr = [];
+
     fetch(`${baseURL}themes`)
     .then(res => res.json())
     .then(themes => {
         // TODO: change to map rather than forEach?
         themes.data.forEach(theme => {
-            let themeObj = new Theme(theme.attributes.name, theme.attributes.prompts)
-            themesArr.push(themeObj)
+            let themeObj = new Theme(theme.attributes.name)
+            theme.attributes.prompts.forEach(prompt => {
+                let promptObj = new Prompt(prompt.content)
+                themeObj.prompts.push(promptObj)
+            })
         })
     })
-    return(themesArr);
+
 }
 
 // function loadThemeNames(themeObjects) {
@@ -47,6 +50,8 @@ function getThemes() {
 // }
 
 function loadModal() {
+
+    // const entertainment = Theme.all[0].name
     const modal = document.getElementById("instructionsModal")
     const p = document.createElement("p")
     p.innerText = `Hi, Welcome to Simple Pictionary!`
@@ -70,9 +75,9 @@ function loadModal() {
             <fieldset>
                 <legend>Select Your Theme:</legend>
                 <div>
-                    <label for="team2_name">Team 2 Name:</label><br>
+                    <label for="theme_name">Theme Name:</label><br>
                     <select name="theme_name" id="theme_name">
-                        <option
+                        <option>How Do I get the Themes to display here?</option>
                     </select>
                 </div>
             </fieldset>
@@ -99,15 +104,24 @@ function getAllPrompts() {
 // JS Classes
 
 class Theme {
-    constructor(name, themePrompts) {
+    constructor(name) {
         this.name = name;
-        this.prompts = themePrompts
+        this.prompts = []
+        Theme.all.push(this);
     }
+
+    static all = [];
 }
 
 class Team {
     constructor(name) {
         this.name = name;
         this.score = 0;
+    }
+}
+
+class Prompt {
+    constructor(content) {
+        this.content = content
     }
 }
