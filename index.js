@@ -2,7 +2,8 @@ const baseURL = "http://localhost:3000/api/v1/";
 
 document.addEventListener('DOMContentLoaded', () => {
     // renderCanvas();
-    let themes = getThemes();
+    // let themes = 
+    getThemes();
     // let themeNames = loadThemeNames(themes);
     loadModal(); 
     // see notes.md to figure out flow here
@@ -86,5 +87,12 @@ class Theme {
     constructor(name, themePrompts) {
         this.name = name;
         this.prompts = themePrompts
+    }
+}
+
+class Team {
+    constructor(name) {
+        this.name = name;
+        this.score = 0;
     }
 }
