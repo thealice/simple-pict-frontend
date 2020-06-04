@@ -1,10 +1,29 @@
-fetch prompts and themes upon load ?
-or ask team what team name and theme they're doing and THEN fetch prompts from that them
+
+Fetch Themes upon load
+render Canvas upon load?
+load Modal popup that
+    asks for team names
+    EVENT! when player submits team names:
+        create Team JS Objects
+        team scores are set to zero
+        clears the modal and inserts a new form for player to select Theme
+    load form with select dropdown for each theme name
+    EVENT! when player selects something from the dropdown:
+        fetch prompts from that theme
+        button for add a card 
+        button for begin gameplay
+    EVENT! when player hits "start gameplay":
+        timer counts down from 5
+    when timer hits zero:
+        load random prompt from theme (or from all prompts if selected "no theme")
+        disable modal after 5 seconds (setTimeout?) and display Canvas
+
+
+
 
 Instructions with team name forms to display upon load
 
-when user submits team names:
-    team scores are set to zero
+
      give user option to start game or add a prompt
          if user selects add a prompt
              take user input and create new prompt (post request)
