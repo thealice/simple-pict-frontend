@@ -1,6 +1,8 @@
 const baseURL = "http://localhost:3000/api/v1/";
 
 document.addEventListener('DOMContentLoaded', () => {
+    const drawboard = document.getElementById("drawboard")
+    const communications = document.getElementById("communications")
     // renderCanvas();
     // let themes = 
     getThemes();
@@ -38,7 +40,7 @@ function getThemes() {
                 themeObj.prompts.push(promptObj)
             })
         })
-        loadInstructions(); 
+        loadCommunications(); 
     })
 
 }
@@ -50,10 +52,9 @@ function getThemes() {
     
 // }
 
-function loadInstructions() {
+function loadCommunications() {
 
     const entertainment = Theme.all[0].name
-    const instruction = document.getElementById("instructions")
     const p = document.createElement("p")
     p.innerText = `Hi, Welcome to Simple Pictionary!`
 
@@ -84,8 +85,8 @@ function loadInstructions() {
             </fieldset>
             
         `
-    instruction.appendChild(p);
-    instruction.appendChild(setupForm);
+    communications.appendChild(p);
+    communications.appendChild(setupForm);
 
 
 }
