@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // where do I get theme names and their prompts and store them?
 
     // let themeNames = loadThemeNames(themes);
-    loadModal(); 
+
     // see notes.md to figure out flow here
     // one idea: Load instructions and setup form with: 
         // enter team names
@@ -38,6 +38,7 @@ function getThemes() {
                 themeObj.prompts.push(promptObj)
             })
         })
+        loadInstructions(); 
     })
 
 }
@@ -49,10 +50,10 @@ function getThemes() {
     
 // }
 
-function loadModal() {
+function loadInstructions() {
 
-    // const entertainment = Theme.all[0].name
-    const modal = document.getElementById("instructionsModal")
+    const entertainment = Theme.all[0].name
+    const instruction = document.getElementById("instructions")
     const p = document.createElement("p")
     p.innerText = `Hi, Welcome to Simple Pictionary!`
 
@@ -77,14 +78,14 @@ function loadModal() {
                 <div>
                     <label for="theme_name">Theme Name:</label><br>
                     <select name="theme_name" id="theme_name">
-                        <option>How Do I get the Themes to display here?</option>
+                        <option>${entertainment}</option>
                     </select>
                 </div>
             </fieldset>
             
         `
-    modal.appendChild(p);
-    modal.appendChild(setupForm);
+    instruction.appendChild(p);
+    instruction.appendChild(setupForm);
 
 
 }
