@@ -77,7 +77,7 @@ function loadSetup() {
                 <legend>Show prompts from:</legend>
                 <div>
                     <select name="theme_name" id="theme_name">
-                    <option>All themes</option>
+                    <option value="all">All themes</option>
                     </select>
                 </div>
             </fieldset>
