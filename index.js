@@ -4,11 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const drawboard = document.getElementById("drawboard")
     const communications = document.getElementById("communications")
     // renderCanvas();
-    // let themes = 
     getThemes();
-    // where do I get theme names and their prompts and store them?
 
-    // let themeNames = loadThemeNames(themes);
 
     // see notes.md to figure out flow here
     // one idea: Load instructions and setup form with: 
@@ -40,21 +37,22 @@ function getThemes() {
                 themeObj.prompts.push(promptObj)
             })
         })
-        loadCommunications(); 
+        loadSetup(); 
     })
 
 }
 
-// function loadThemeNames(themeObjects) {
-//     return themeObjects.map(theme => {
-//         return this.push(theme.name)
-//     })
-    
-// }
+function renderThemeOptions(arrayOfThemeObjs) {
+    let selectOptions = document.getElementById("theme_name");
+    arrayOfThemeObjs.forEach(themeObj => {
+        let themeOption = document.createElement("option")
+        themeOption.innerHTML += themeObj.name
+        selectOptions.appendChild(themeOption);
+    })
+}
 
-function loadCommunications() {
+function loadSetup() {
 
-    const entertainment = Theme.all[0].name
     const p = document.createElement("p")
     p.innerText = `Hi, Welcome to Simple Pictionary!`
 
@@ -75,11 +73,10 @@ function loadCommunications() {
             </div>
             </fieldset>
             <fieldset>
-                <legend>Select Your Theme:</legend>
+                <legend>Show prompts from:</legend>
                 <div>
-                    <label for="theme_name">Theme Name:</label><br>
                     <select name="theme_name" id="theme_name">
-                        <option>${entertainment}</option>
+                    <option>All themes</option>
                     </select>
                 </div>
             </fieldset>
@@ -87,11 +84,11 @@ function loadCommunications() {
         `
     communications.appendChild(p);
     communications.appendChild(setupForm);
-
+    renderThemeOptions(Theme.all)
 
 }
 
-function getAllPrompts() {
+const getAllPrompts = () => {
     const promptsArr = [];
     fetch(`${baseURL}prompts`)
     .then(res => res.json())
