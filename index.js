@@ -31,7 +31,7 @@ function getThemes() {
     .then(themes => {
         // TODO: change to map rather than forEach?
         themes.data.forEach(theme => {
-            let themeObj = new Theme(theme.attributes.name)
+            let themeObj = new Theme(theme.attributes.name, theme.attributes.id)
             theme.attributes.prompts.forEach(prompt => {
                 let promptObj = new Prompt(prompt.content)
                 themeObj.prompts.push(promptObj)
@@ -45,8 +45,9 @@ function getThemes() {
 function renderThemeOptions(arrayOfThemeObjs) {
     let selectOptions = document.getElementById("theme_name");
     arrayOfThemeObjs.forEach(themeObj => {
-        let themeOption = document.createElement("option")
-        themeOption.innerHTML += themeObj.name
+        let themeOption = document.createElement("option");
+        themeOption.innerHTML += themeObj.name;
+        themeOption.setAttribute("data-id", themeObj.id);
         selectOptions.appendChild(themeOption);
     })
 }
@@ -88,23 +89,24 @@ function loadSetup() {
 
 }
 
-const getAllPrompts = () => {
-    const promptsArr = [];
-    fetch(`${baseURL}prompts`)
-    .then(res => res.json())
-    .then(prompts => {
-        prompts.data.forEach(prompt => {
-            promptsArr.push(prompt.attributes.content)
-        })
-    })
-    return promptsArr;
-}
+// const getAllPrompts = () => {
+//     const promptsArr = [];
+//     fetch(`${baseURL}prompts`)
+//     .then(res => res.json())
+//     .then(prompts => {
+//         prompts.data.forEach(prompt => {
+//             promptsArr.push(prompt.attributes.content)
+//         })
+//     })
+//     return promptsArr;
+// }
 
 // JS Classes
 
 class Theme {
-    constructor(name) {
+    constructor(name, id) {
         this.name = name;
+        this.id = id;
         this.prompts = []
         Theme.all.push(this);
     }
