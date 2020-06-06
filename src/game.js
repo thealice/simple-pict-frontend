@@ -12,6 +12,5 @@ class Game {
         }
         // this.theme = Theme.all.find(theme);
         this.scorecard = `${this.team1.name}: ${this.team1.score}, ${this.team2.name}: ${this.team2.score}`;
-        console.log(this);
     }
 }

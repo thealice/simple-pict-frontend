@@ -5,8 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const communications = document.getElementById("communications")
     // renderCanvas();
     getThemes();
-
-
+    
     // see notes.md to figure out flow here
     // one idea: Load instructions and setup form with: 
         // enter team names
@@ -34,7 +33,9 @@ function getThemes() {
             let themeObj = new Theme(theme.attributes.name, theme.attributes.id)
             theme.attributes.prompts.forEach(prompt => {
                 let promptObj = new Prompt(prompt.content)
-                themeObj.prompts.push(promptObj)
+                // Right now I'm only storing the prompt content
+                // if there were more attributes I'd want to do this differently
+                themeObj.prompts.push(promptObj.content)
             })
         })
         loadSetup(); 
@@ -47,7 +48,6 @@ function renderThemeOptions(arrayOfThemeObjs) {
     arrayOfThemeObjs.forEach(themeObj => {
         let themeOption = document.createElement("option");
         themeOption.innerHTML += themeObj.name;
-        themeOption.setAttribute("value", themeObj.id);
         selectOptions.appendChild(themeOption);
     })
 }
@@ -69,11 +69,11 @@ function loadSetup() {
                 <label for="team1_name">
                 Team1 Name:
                 </label><br>
-                    <input type="text" name="team1_name" id="team1_name" placeholder="Enter first Team name...">
+                    <input type="text" name="team1" id="team1" placeholder="Enter first Team name...">
                 </div>
             <div>
                 <label for="team2_name">Team 2 Name:</label><br>
-                <input type="text" name="team2_name" id="team2_name" placeholder="Enter second Team name...">
+                <input type="text" name="team2" id="team2" placeholder="Enter second Team name...">
             </div>
             </fieldset>
             <fieldset>
@@ -90,7 +90,24 @@ function loadSetup() {
     communications.appendChild(div)
     div.appendChild(p);
     div.appendChild(setupForm);
+    
     renderThemeOptions(Theme.all)
+
+    const gameSetupForm = document.getElementById("game-setup")
+    gameSetupForm.addEventListener("submit", (e) => 
+        gameSetupHandler(e)
+    )
+
+}
+
+function gameSetupHandler(e) {
+    e.preventDefault()
+    const team1Input = document.getElementById("team1").value
+    const team2Input = document.getElementById("team2").value
+    const themeInput = document.getElementById("theme_name").value
+
+    let currentGame = new Game(team1Input, team2Input, themeInput)
+    console.log(currentGame)
 
 }
 
