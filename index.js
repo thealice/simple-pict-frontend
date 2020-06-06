@@ -47,12 +47,15 @@ function renderThemeOptions(arrayOfThemeObjs) {
     arrayOfThemeObjs.forEach(themeObj => {
         let themeOption = document.createElement("option");
         themeOption.innerHTML += themeObj.name;
-        themeOption.setAttribute("data-id", themeObj.id);
+        themeOption.setAttribute("value", themeObj.id);
         selectOptions.appendChild(themeOption);
     })
 }
 
 function loadSetup() {
+
+    const div = document.createElement("div")
+    div.setAttribute("id", "game-setup-container")
 
     const p = document.createElement("p")
     p.innerText = `Hi, Welcome to Simple Pictionary!`
@@ -74,17 +77,19 @@ function loadSetup() {
             </div>
             </fieldset>
             <fieldset>
-                <legend>Show prompts from:</legend>
+                <legend>Select your theme:</legend>
                 <div>
                     <select name="theme_name" id="theme_name">
                     <option value="all">All themes</option>
                     </select>
                 </div>
             </fieldset>
+            <input id= 'setup-button' type="submit" name="submit" value="Setup Game" class="submit">
             
         `
-    communications.appendChild(p);
-    communications.appendChild(setupForm);
+    communications.appendChild(div)
+    div.appendChild(p);
+    div.appendChild(setupForm);
     renderThemeOptions(Theme.all)
 
 }
