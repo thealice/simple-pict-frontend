@@ -123,11 +123,23 @@ class Team {
     constructor(name) {
         this.name = name;
         this.score = 0;
+        Team.all.push(this);
     }
+
+    static all = [];
 }
 
 class Prompt {
     constructor(content) {
         this.content = content
+    }
+}
+
+class Game {
+    constructor(team1, team2, theme="all") {
+        this.team1 = team1;
+        this.team2 = team2;
+        this.theme = theme;
+        this.scoreCard = `${team1.name}: ${team1.score}, ${team2.name}: ${team2.score}`
     }
 }
