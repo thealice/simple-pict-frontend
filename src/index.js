@@ -94,52 +94,9 @@ function loadSetup() {
 
 }
 
-// const getAllPrompts = () => {
-//     const promptsArr = [];
-//     fetch(`${baseURL}prompts`)
-//     .then(res => res.json())
-//     .then(prompts => {
-//         prompts.data.forEach(prompt => {
-//             promptsArr.push(prompt.attributes.content)
-//         })
-//     })
-//     return promptsArr;
-// }
 
-// JS Classes
 
-class Theme {
-    constructor(name, id) {
-        this.name = name;
-        this.id = id;
-        this.prompts = []
-        Theme.all.push(this);
-    }
 
-    static all = [];
-}
 
-class Team {
-    constructor(name) {
-        this.name = name;
-        this.score = 0;
-        Team.all.push(this);
-    }
 
-    static all = [];
-}
 
-class Prompt {
-    constructor(content) {
-        this.content = content
-    }
-}
-
-class Game {
-    constructor(team1, team2, theme="all") {
-        this.team1 = team1;
-        this.team2 = team2;
-        this.theme = theme;
-        this.scoreCard = `${team1.name}: ${team1.score}, ${team2.name}: ${team2.score}`
-    }
-}
