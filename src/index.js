@@ -3,23 +3,8 @@ const baseURL = "http://localhost:3000/api/v1/";
 document.addEventListener('DOMContentLoaded', () => {
     const drawboard = document.getElementById("drawboard")
     const communications = document.getElementById("communications")
-    // renderCanvas();
     getThemes();
-    
-    // see notes.md to figure out flow here
-    // one idea: Load instructions and setup form with: 
-        // enter team names
-        // select a theme or no theme
-        // submit button
-    // fetch prompts from that theme
-    // or get all prompts if user selects "none"
-        // getAllPrompts();
-    // ask if player wants to add a prompt or start game
-        // if yes load "create a prompt" form
-        // upon submit create a new prompt and post to database
-    
-    // show team name whose turn it is and begin gameplay button
-    // begin gameplay
+
 });
 
 
@@ -107,8 +92,7 @@ function gameSetupHandler(e) {
     const themeInput = document.getElementById("theme_name").value
 
     let currentGame = new Game(team1Input, team2Input, themeInput)
-    console.log(currentGame)
-
+    console.log(currentGame);
 }
 
 
