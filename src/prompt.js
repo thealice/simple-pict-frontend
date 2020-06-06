@@ -1,7 +1,9 @@
 class Prompt {
     constructor(content) {
         this.content = content
-        Prompt.all.push(this);
+        // Right now I am only storing prompt contents in Prompt.all so it is just an array of strings.
+        // If prompt objects had more attributes I would want to update to 'this' rather than 'this.content'
+        Prompt.all.push(this.content);
     }
 
     static all = [];
