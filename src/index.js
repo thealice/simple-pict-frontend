@@ -35,6 +35,7 @@ function renderThemeOptions(arrayOfThemeObjs, id) {
         let themeOption = document.createElement("option");
         themeOption.innerHTML += themeObj.name;
         themeOption.value = themeObj.id;
+        if(game.currentGame && game.currentGame.theme.name === themeObj.name) { themeOption.setAttribute("selected", "selected") }
         selectOptions.appendChild(themeOption);
     })
 }
@@ -91,9 +92,9 @@ function gameSetupHandler(e) {
     e.preventDefault()
     const team1Input = document.getElementById("team1").value
     const team2Input = document.getElementById("team2").value
-    const themeInput = document.getElementById("theme_name").value
+    const themeId = parseInt(document.getElementById("theme_name").value)
 
-    game.currentgame = new Game(team1Input, team2Input, themeInput)
+    game.currentGame = new Game(team1Input, team2Input, themeId)
     promptForm();
 }
 
@@ -101,33 +102,66 @@ function promptForm() {
     let div = document.getElementById("game-setup-container")
 
     let button = document.createElement("button");
-    button.innerText = "Begin Game"
+    button.innerText = "Let's start drawing"
+    button.setAttribute("id", "begin-gameplay")
     div.prepend(button);
 
     let p = div.querySelector("p")
-    p.innerText = "Would you like to submit a prompt?"
+    p.innerText = `You can submit new prompt(s) below. Once you're ready to begin the game, smash the button above.`
 
     const promptForm = document.createElement("form")
     promptForm.setAttribute("id", "prompt-setup")
     promptForm.innerHTML = `
+ 
                 <div>
-                    <select name="theme_id" id="theme_id">
+                    <label for="prompt-content">Enter your prompt:</label><br />
+                    <input type="text" name="content" id="prompt-content">
+                </div>
+
+                <div>
+                    <label for="prompt-theme">Select a theme for this prompt:</label><br />
+                    <select name="theme_id" id="prompt-theme">
                     </select>
+                    <p>Note: The current game's theme is: ${game.currentGame.theme.name}.<br />
+                    If you enter a prompt under a different theme, it will not come into play this game, but will be stored for future use.</p>
                 </div>
-                <div>
-                    <input type="text" name="content">
-                </div>
-            <input id= 'create-prompt-button' type="submit" name="submit" value="Create Prompt" class="submit">     
+
+                <input id= 'create-prompt-button' type="submit" name="submit" value="Create Prompt" class="submit">     
         `
 
     div.appendChild(p);
     div.appendChild(promptForm);
     game.promptForm = promptForm;
-    renderThemeOptions(Theme.all, "theme_id")
+    renderThemeOptions(Theme.all, "prompt-theme")
     promptForm.addEventListener("submit", (e) => 
-        console.log(e)
+        createPromptFormHandler(e)
     )
 
+}
+
+function createPromptFormHandler(e) {
+    e.preventDefault()
+   
+    const promptContentInput = document.getElementById("prompt-content").value
+    const promptThemeId =  parseInt(document.getElementById("prompt-theme").value)
+    postFetch(promptContentInput, promptThemeId)
+    // remove promptContentInput value
+}
+
+function postFetch(content, theme_id) {
+    const bodyData = {content, theme_id}
+    fetch(`${baseURL}prompts`, {
+        method: 'POST', 
+        headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: JSON.stringify(bodyData)
+    })
+    .then(response => response.json())
+    .then(prompt => {
+        console.log('Success:', prompt);
+    })
 }
 
 
