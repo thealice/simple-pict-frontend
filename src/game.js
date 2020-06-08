@@ -7,7 +7,7 @@ class Game {
             this.theme = "All themes"
             this.prompts = Prompt.all
         } else {
-            this.theme = Theme.all.find(themeObj => themeObj.name === theme);
+            this.theme = Theme.all.find(themeObj => themeObj.id == theme);
             this.prompts = this.theme.prompts
         }
         // this.theme = Theme.all.find(theme);

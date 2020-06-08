@@ -1,7 +1,8 @@
 const baseURL = "http://localhost:3000/api/v1/";
+let game = {}
 
 document.addEventListener('DOMContentLoaded', () => {
-    const drawboard = document.getElementById("drawboard")
+    // const drawboard = document.getElementById("drawboard")
     const communications = document.getElementById("communications")
     getThemes();
 
@@ -28,11 +29,12 @@ function getThemes() {
 
 }
 
-function renderThemeOptions(arrayOfThemeObjs) {
-    let selectOptions = document.getElementById("theme_name");
+function renderThemeOptions(arrayOfThemeObjs, id) {
+    let selectOptions = document.getElementById(id);
     arrayOfThemeObjs.forEach(themeObj => {
         let themeOption = document.createElement("option");
         themeOption.innerHTML += themeObj.name;
+        themeOption.value = themeObj.id;
         selectOptions.appendChild(themeOption);
     })
 }
@@ -75,24 +77,57 @@ function loadSetup() {
     communications.appendChild(div)
     div.appendChild(p);
     div.appendChild(setupForm);
-    
-    renderThemeOptions(Theme.all)
+    game.setupForm = setupForm;
+    renderThemeOptions(Theme.all, "theme_name")
 
-    const gameSetupForm = document.getElementById("game-setup")
-    gameSetupForm.addEventListener("submit", (e) => 
+    setupForm.addEventListener("submit", (e) => 
         gameSetupHandler(e)
     )
 
 }
 
 function gameSetupHandler(e) {
+    game.setupForm.style.display = "none";
     e.preventDefault()
     const team1Input = document.getElementById("team1").value
     const team2Input = document.getElementById("team2").value
     const themeInput = document.getElementById("theme_name").value
 
-    let currentGame = new Game(team1Input, team2Input, themeInput)
-    console.log(currentGame);
+    game.currentgame = new Game(team1Input, team2Input, themeInput)
+    promptForm();
+}
+
+function promptForm() {
+    let div = document.getElementById("game-setup-container")
+
+    let button = document.createElement("button");
+    button.innerText = "Begin Game"
+    div.prepend(button);
+
+    let p = div.querySelector("p")
+    p.innerText = "Would you like to submit a prompt?"
+
+    const promptForm = document.createElement("form")
+    promptForm.setAttribute("id", "prompt-setup")
+    promptForm.innerHTML = `
+                <div>
+                    <select name="theme_id" id="theme_id">
+                    </select>
+                </div>
+                <div>
+                    <input type="text" name="content">
+                </div>
+            <input id= 'create-prompt-button' type="submit" name="submit" value="Create Prompt" class="submit">     
+        `
+
+    div.appendChild(p);
+    div.appendChild(promptForm);
+    game.promptForm = promptForm;
+    renderThemeOptions(Theme.all, "theme_id")
+    promptForm.addEventListener("submit", (e) => 
+        console.log(e)
+    )
+
 }
 
 
