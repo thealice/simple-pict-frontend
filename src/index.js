@@ -145,7 +145,7 @@ function createPromptFormHandler(e) {
     const promptContentInput = document.getElementById("prompt-content").value
     const promptThemeId =  parseInt(document.getElementById("prompt-theme").value)
     postFetch(promptContentInput, promptThemeId)
-    // remove promptContentInput value
+    game.promptForm.reset();
 }
 
 function postFetch(content, theme_id) {
