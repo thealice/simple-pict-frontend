@@ -44,27 +44,24 @@ function promptForm() {
     div.setAttribute("id", "game-setup-container")
 
     const p = document.createElement("p")
-    p.innerText = `
-        Hi, Welcome to Simple Pictionary!<br />
-        You can submit new prompt(s) below. Once you're ready to begin the game, smash the button above.
+    p.innerHTML = `
+        <h1>Hi, Welcome to Simple Pictionary!</h1>
+        You can submit new prompt(s) below. Otherwise, <button id="begin-setup">Let's begin</button>
     `
     div.appendChild(p);
 
-    let button = document.createElement("button");
-    button.innerText = "Let's start drawing"
-    button.setAttribute("id", "begin-gameplay")
-    div.prepend(button);
+    let button = p.querySelector("button")
 
     const promptForm = document.createElement("form")
     promptForm.setAttribute("id", "prompt-setup")
     promptForm.innerHTML = `
  
-                <div>
+                <div class="mb-10">
                     <label for="prompt-content">Enter your prompt:</label><br />
                     <input type="text" name="content" id="prompt-content">
                 </div>
 
-                <div>
+                <div class="mb-10">
                     <label for="theme_id">Select a theme for this prompt:</label><br />
                     <select name="theme_id" id="theme_id">
                     </select>
@@ -74,8 +71,9 @@ function promptForm() {
         `
 
     div.appendChild(promptForm);
+    communications.appendChild(div)
     game.promptForm = promptForm;
-    
+
     renderThemeOptions(Theme.all, "theme_id")
 
     promptForm.addEventListener("submit", (e) => 
@@ -146,7 +144,7 @@ function loadSetup() {
             <input id= 'setup-button' type="submit" name="submit" value="Setup Game" class="submit">
             
         `
-    communications.appendChild(div)
+
     div.appendChild(p);
     div.appendChild(setupForm);
     game.setupForm = setupForm;
