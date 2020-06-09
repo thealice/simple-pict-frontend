@@ -193,15 +193,27 @@ function loadInstructions() {
         `
     } else {
         instruct.innerHTML = `
-        <h1>It's ${game.currentGame.turn.name}'s Turn!</h1>
-        <h2>Scorecard</h2>
-        ${game.currentGame.scorecard}
-        <h2>Instructions</h2>
-        Decide whose turn it is to draw. Everyone else should avert their eyes!<br />
-        <span id="prompt-reveal">When the drawer is ready, click <button>Show prompt</button> to begin gameplay</span><br />
-        The prompt will display for 5 seconds and then ${game.currentGame.turn.name} will have 60 seconds to guess the drawing.
-        <h2>Theme</h2>
-        ${game.currentGame.theme.name}
+        <h1 class="mb-3">It's ${game.currentGame.turn.name}'s Turn!</h1>
+        
+        <div class="row mb-3">
+            <div class="col-md-auto">
+                <h2>Scorecard</h2>
+                ${game.currentGame.scorecard}
+            </div>
+            <div class="col-md-auto">
+                <h2>Theme</h2>
+                ${game.currentGame.theme.name}
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-auto">
+                <h2>Instructions</h2>
+                Decide whose turn it is to draw. Everyone else should avert their eyes!<br />
+                <span id="prompt-reveal">When the drawer is ready, click <button>Show prompt</button> to begin gameplay</span><br />
+                The prompt will display for 5 seconds and then ${game.currentGame.turn.name} will have 60 seconds to guess the drawing.
+            </div>
+        </div>
     `
     }
    
