@@ -169,27 +169,42 @@ function gameSetupHandler(e) {
     const themeId = parseInt(document.getElementById("theme_name").value)
 
     game.currentGame = new Game(team1Input, team2Input, themeId)
-    beginGamePlay();
+    loadInstructions();
 }
 
-function beginGamePlay() {
+function loadInstructions() {
     const div = document.createElement("div")
     div.setAttribute("id", "game-info-container")
     communications.appendChild(div)
 
     const p = document.createElement("p")
 
-    p.innerHTML = `
+    if(team1.score > 14) {
+        p.innerHTML = `
+            Congratulations, ${game.currentGame.team1.name}, you won!!!<br>
+            ${game.currentGame.scorecard}<br>
+            <button id="rematch">Rematch</button>
+        `
+    } else if(team2.score > 14) {
+        p.innerHTML = `
+            Congratulations, ${game.currentGame.team2.name}, you won!!!<br>
+            ${game.currentGame.scorecard}<br>
+            <button id="rematch">Rematch</button>
+        `
+    } else {
+        p.innerHTML = `
         <h1>It's ${game.currentGame.turn.name}'s Turn!</h1>
         <h2>Scorecard</h2>
         ${game.currentGame.scorecard}
         <h2>Instructions</h2>
         Decide whose turn it is to draw. Everyone else should avert their eyes!<br />
-        When you're ready, click <button>Show prompt</button> to begin gameplay<br />
-        The prompt will display for 5 seconds and then the drawing begins.
+        When the drawer is ready, click <button>Show prompt</button> to begin gameplay<br />
+        The prompt will display for 5 seconds and then ${game.currentGame.turn.name} will have 60 seconds to guess the drawing.
         <h2>Theme</h2>
         ${game.currentGame.theme.name}
     `
+    }
+   
     div.appendChild(p);
 
 
