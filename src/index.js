@@ -46,7 +46,7 @@ function promptForm() {
     const p = document.createElement("p")
     p.innerHTML = `
         <h1>Hi, Welcome to Simple Pictionary!</h1>
-        You can submit new prompt(s) below. Otherwise, <button id="begin-setup">Let's begin</button>
+        You can add new cards to the deck below. Otherwise, <button id="begin-setup">Let's begin</button>
     `
     div.appendChild(p);
 
@@ -57,12 +57,12 @@ function promptForm() {
     promptForm.innerHTML = `
  
                 <div class="mb-10">
-                    <label for="prompt-content">Enter your prompt:</label><br />
+                    <label for="prompt-content">Enter your prompt (the word(s) that will be drawn):</label><br />
                     <input type="text" name="content" id="prompt-content">
                 </div>
 
                 <div class="mb-10">
-                    <label for="theme_id">Select a theme for this prompt:</label><br />
+                    <label for="theme_id">File it under:</label><br />
                     <select name="theme_id" id="theme_id">
                     </select>
                 </div>
@@ -81,6 +81,7 @@ function promptForm() {
     )
 
     button.addEventListener("click", () => {
+        game.promptForm.style.display = "none";
         loadSetup();
     })
 
@@ -89,10 +90,14 @@ function promptForm() {
 function createPromptFormHandler(e) {
     e.preventDefault()
     const promptContentInput = document.getElementById("prompt-content").value
-    const promptThemeId =  parseInt(document.getElementById("prompt-theme").value)
+    const promptThemeId =  parseInt(document.getElementById("theme_id").value)
     // send prompt to backend to create a new Prompt and store it in the DB
     postFetch(promptContentInput, promptThemeId)
-    // find the themeObj then themeObj.prompts.push(promptContentInput)
+    // Add the new prompt to the OO JS version of Themes
+    //  TODO: create a find method for Theme class
+    const promptTheme = Theme.all.find(themeObj => themeObj.id === promptThemeId);
+    promptTheme.prompts.push(promptContentInput)
+    
     game.promptForm.reset();
 }
 
