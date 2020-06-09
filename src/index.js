@@ -146,7 +146,7 @@ function loadSetup() {
                     </select>
                 </div>
             </fieldset>
-            <input id= 'setup-button' type="submit" name="submit" value="Setup Game" class="submit">
+            <input id= 'setup-button' type="submit" name="submit" value="Start Game" class="submit">
             
         `
 
@@ -169,24 +169,47 @@ function gameSetupHandler(e) {
     const themeId = parseInt(document.getElementById("theme_name").value)
 
     game.currentGame = new Game(team1Input, team2Input, themeId)
-    // promptForm();
+    beginGamePlay();
 }
 
-function getThemePrompts() {
-    fetch(`${baseURL}themes`)
-    .then(res => res.json())
-    .then(themes => {
-        themes.data.forEach(theme => {
-            theme.attributes.prompts.forEach(prompt => {
-                let promptObj = new Prompt(prompt.content)
-                // Right now I'm only storing the prompt content
-                // if there were more attributes I'd want to do this differently
-                themeObj.prompts.push(promptObj.content)
-            })
-        })
-        // loadSetup(); 
-    })
+function beginGamePlay() {
+    const div = document.createElement("div")
+    div.setAttribute("id", "game-info-container")
+    communications.appendChild(div)
+
+    const p = document.createElement("p")
+
+    p.innerHTML = `
+        <h1>It's ${game.currentGame.turn.name}'s Turn!</h1>
+        <h2>Scorecard</h2>
+        ${game.currentGame.scorecard}
+        <h2>Instructions</h2>
+        Decide whose turn it is to draw. Everyone else should avert their eyes!<br />
+        When you're ready, click <button>Show prompt</button> to begin gameplay<br />
+        The prompt will display for 5 seconds and then the drawing begins.
+        <h2>Theme</h2>
+        ${game.currentGame.theme.name}
+    `
+    div.appendChild(p);
+
+
 }
+
+// function getThemePrompts() {
+//     fetch(`${baseURL}themes`)
+//     .then(res => res.json())
+//     .then(themes => {
+//         themes.data.forEach(theme => {
+//             theme.attributes.prompts.forEach(prompt => {
+//                 let promptObj = new Prompt(prompt.content)
+//                 // Right now I'm only storing the prompt content
+//                 // if there were more attributes I'd want to do this differently
+//                 themeObj.prompts.push(promptObj.content)
+//             })
+//         })
+//         // loadSetup(); 
+//     })
+// }
 
 
 

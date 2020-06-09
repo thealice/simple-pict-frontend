@@ -1,7 +1,7 @@
 
 Fetch Themes upon load
-render Canvas upon load?
-load Modal popup that
+
+load page that
     asks for team names
     EVENT! when player submits team names:
         create Team JS Objects
