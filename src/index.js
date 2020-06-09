@@ -50,8 +50,6 @@ function promptForm() {
     `
     div.appendChild(p);
 
-    let button = p.querySelector("button")
-
     const promptForm = document.createElement("form")
     promptForm.setAttribute("id", "prompt-setup")
     promptForm.innerHTML = `
@@ -79,6 +77,8 @@ function promptForm() {
     promptForm.addEventListener("submit", (e) => 
         createPromptFormHandler(e)
     )
+
+    const button = p.querySelector("button")
 
     button.addEventListener("click", () => {
         game.promptForm.style.display = "none";
@@ -152,7 +152,7 @@ function loadSetup() {
 
     div.appendChild(p);
     div.appendChild(setupForm);
-    game.setupForm = setupForm;
+    game.setupContainer = div;
     renderThemeOptions(Theme.all, "theme_name")
 
     setupForm.addEventListener("submit", (e) => 
@@ -162,7 +162,7 @@ function loadSetup() {
 }
 
 function gameSetupHandler(e) {
-    game.setupForm.style.display = "none";
+    game.setupContainer.style.display = "none";
     e.preventDefault()
     const team1Input = document.getElementById("team1").value
     const team2Input = document.getElementById("team2").value
