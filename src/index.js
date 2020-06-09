@@ -173,26 +173,23 @@ function gameSetupHandler(e) {
 }
 
 function loadInstructions() {
-    const div = document.createElement("div")
-    div.setAttribute("id", "game-info-container")
-    communications.appendChild(div)
-
-    const instruct = document.createElement("div")
+    const gameInfo = document.createElement("div")
+    gameInfo.setAttribute("id", "game-info-container")
 
     if(team1.score > 14) {
-        instruct.innerHTML = `
+        gameInfo.innerHTML = `
             Congratulations, ${game.currentGame.team1.name}, you won!!!<br>
             ${game.currentGame.scorecard}<br>
             <button id="rematch">Rematch</button>
         `
     } else if(team2.score > 14) {
-        instruct.innerHTML = `
+        gameInfo.innerHTML = `
             Congratulations, ${game.currentGame.team2.name}, you won!!!<br>
             ${game.currentGame.scorecard}<br>
             <button id="rematch">Rematch</button>
         `
     } else {
-        instruct.innerHTML = `
+        gameInfo.innerHTML = `
         <h1 class="mb-3">It's ${game.currentGame.turn.name}'s Turn!</h1>
         
         <div class="row mb-3">
@@ -206,7 +203,7 @@ function loadInstructions() {
             </div>
         </div>
 
-        <div class="row mb-3">
+        <div id="instructions" class="row mb-3">
             <div class="col-md-auto">
                 <h2>Instructions</h2>
                 Decide whose turn it is to draw. Everyone else should avert their eyes!<br />
@@ -216,13 +213,12 @@ function loadInstructions() {
         </div>
     `
     }
-   
-    div.appendChild(instruct);
-    game.instruct = instruct
-    const promptButton = instruct.querySelector("button")
+    communications.appendChild(gameInfo)
+    game.info = gameInfo
+    const promptButton = gameInfo.querySelector("button")
 
     function revealPrompt () {
-        const promptReveal = game.instruct.querySelector("span")
+        const promptReveal = game.info.querySelector("span")
         promptReveal.innerHTML = `
             This is where the prompt will go!
         `
