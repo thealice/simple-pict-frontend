@@ -201,6 +201,10 @@ function loadInstructions() {
                 <h2>Theme</h2>
                 ${game.currentGame.theme.name}
             </div>
+            <div class="col-md-auto">
+            <h2>Countdown</h2>
+            Coundown clock goes here
+        </div>
         </div>
 
         <div id="instructions" class="row mb-3">

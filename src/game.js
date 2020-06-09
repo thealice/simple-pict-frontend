@@ -11,7 +11,7 @@ class Game {
 
             this.prompts = this.theme.prompts
         }
-        this.scorecard = `${this.team1.name}: ${this.team1.score}, ${this.team2.name}: ${this.team2.score}`;
+        this.scorecard = `${this.team1.name}: ${this.team1.score}<br />${this.team2.name}: ${this.team2.score}`;
 
         this.turn = this.team1;
     }
