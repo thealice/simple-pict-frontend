@@ -142,7 +142,7 @@ function loadSetup() {
                 <legend>Select your theme:</legend>
                 <div>
                     <select name="theme_name" id="theme_name">
-                    <option value="all">All themes</option>
+                    <option value="0">All themes</option>
                     </select>
                 </div>
             </fieldset>
