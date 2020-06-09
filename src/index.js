@@ -78,7 +78,7 @@ function promptForm() {
         createPromptFormHandler(e)
     )
 
-    const button = p.querySelector("button")
+    const button = document.getElementById("begin-setup")
 
     button.addEventListener("click", () => {
         game.promptForm.style.display = "none";
@@ -177,36 +177,56 @@ function loadInstructions() {
     div.setAttribute("id", "game-info-container")
     communications.appendChild(div)
 
-    const p = document.createElement("p")
+    const instruct = document.createElement("div")
 
     if(team1.score > 14) {
-        p.innerHTML = `
+        instruct.innerHTML = `
             Congratulations, ${game.currentGame.team1.name}, you won!!!<br>
             ${game.currentGame.scorecard}<br>
             <button id="rematch">Rematch</button>
         `
     } else if(team2.score > 14) {
-        p.innerHTML = `
+        instruct.innerHTML = `
             Congratulations, ${game.currentGame.team2.name}, you won!!!<br>
             ${game.currentGame.scorecard}<br>
             <button id="rematch">Rematch</button>
         `
     } else {
-        p.innerHTML = `
+        instruct.innerHTML = `
         <h1>It's ${game.currentGame.turn.name}'s Turn!</h1>
         <h2>Scorecard</h2>
         ${game.currentGame.scorecard}
         <h2>Instructions</h2>
         Decide whose turn it is to draw. Everyone else should avert their eyes!<br />
-        When the drawer is ready, click <button>Show prompt</button> to begin gameplay<br />
+        <span id="prompt-reveal">When the drawer is ready, click <button>Show prompt</button> to begin gameplay</span><br />
         The prompt will display for 5 seconds and then ${game.currentGame.turn.name} will have 60 seconds to guess the drawing.
         <h2>Theme</h2>
         ${game.currentGame.theme.name}
     `
     }
    
-    div.appendChild(p);
+    div.appendChild(instruct);
+    game.instruct = instruct
+    const promptButton = instruct.querySelector("button")
 
+    function revealPrompt () {
+        const promptReveal = game.instruct.querySelector("span")
+        promptReveal.innerHTML = `
+            This is where the prompt will go!
+        `
+    }
+
+    function loadDrawboard () {
+        console.log("hide instructions and append a drawboard to after where theme goes")
+    }
+
+    promptButton.addEventListener("click", () => {
+        revealPrompt();
+        setTimeout(loadDrawboard, 5000);
+
+        })
+
+    
 
 }
 
