@@ -173,7 +173,11 @@ function gameSetupHandler(e) {
 }
 
 function loadInstructions() {
+    let team1 = game.currentGame.team1
+    let team2 = game.currentGame.team2
+    let scorecard = `${team1.name}: ${team1.score}<br />${team2.name}: ${team2.score}`;
     if(document.getElementById("game-info-container")) {
+        // debugger
         gameInfo = document.getElementById("game-info-container")
     } else {
         var gameInfo = document.createElement("div")
@@ -183,14 +187,14 @@ function loadInstructions() {
     if(team1.score > 14) {
         
         gameInfo.innerHTML = `
-            Congratulations, ${game.currentGame.team1.name}, you won!!!<br>
-            ${game.currentGame.scorecard}<br>
+            Congratulations, ${team1.name}, you won!!!<br>
+            ${scorecard}<br>
             <button id="rematch">Rematch</button>
         `
     } else if(team2.score > 14) {
         gameInfo.innerHTML = `
-            Congratulations, ${game.currentGame.team2.name}, you won!!!<br>
-            ${game.currentGame.scorecard}<br>
+            Congratulations, ${team2.name}, you won!!!<br>
+            ${scorecard}<br>
             <button id="rematch">Rematch</button>
         `
     } else {
@@ -200,7 +204,7 @@ function loadInstructions() {
         <div id="round-info" class="row mb-3">
             <div class="col-md-auto">
                 <h2>Scorecard</h2>
-                ${game.currentGame.scorecard}
+                ${scorecard}
             </div>
             <div class="col-md-auto">
                 <h2>Theme</h2>
@@ -243,8 +247,6 @@ function revealPrompt () {
     promptReveal.innerHTML = randomPrompt
     // remove this prompt from the current game
     game.currentGame.prompts = currentPrompts.filter((prompt) => prompt !== randomPrompt);
-
-
 }
 
 function scoreForm() {
@@ -276,14 +278,26 @@ function scoreForm() {
 
 function scoreFormHandler(e) {
     e.preventDefault()
-    console.log(e)
+    
     if (document.getElementById("add-score").value === "yes") {
         // add to team whose turn it is' score
+        game.currentGame.turn.score += 1;
+        console.log(game.currentGame.turn.score)
         // current team gets to go again
-        // loadInstructions();
+        loadInstructions();
     }  else {
         // update game turn to other team
-        // loadInstructions();
+        let [team1, team2] = game.currentGame.teams
+        let turn = game.currentGame.turn
+        if (turn === team1) {
+            game.currentGame.turn = team2
+            console.log(game.currentGame.turn)
+        } else {
+            turn = team1
+            game.currentGame.turn
+            console.log(game.currentGame.turn)
+        }
+        loadInstructions();
     }
 
 }
