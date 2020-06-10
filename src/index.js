@@ -245,25 +245,6 @@ function revealPrompt () {
 
 
 
-// function getThemePrompts() {
-//     fetch(`${baseURL}themes`)
-//     .then(res => res.json())
-//     .then(themes => {
-//         themes.data.forEach(theme => {
-//             theme.attributes.prompts.forEach(prompt => {
-//                 let promptObj = new Prompt(prompt.content)
-//                 // Right now I'm only storing the prompt content
-//                 // if there were more attributes I'd want to do this differently
-//                 themeObj.prompts.push(promptObj.content)
-//             })
-//         })
-//         // loadSetup(); 
-//     })
-// }
-
-
-
-
 
 
 
