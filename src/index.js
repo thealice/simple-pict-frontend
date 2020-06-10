@@ -2,7 +2,7 @@ const baseURL = "http://localhost:3000/api/v1/";
 let game = {}
 
 document.addEventListener('DOMContentLoaded', () => {
-    // const drawboard = document.getElementById("drawboard")
+    const drawboard = document.getElementById("drawboard")
     const communications = document.getElementById("communications")
     getThemes();
 
@@ -219,35 +219,31 @@ function loadInstructions() {
     }
     communications.appendChild(gameInfo)
     game.info = gameInfo
-    const promptButton = gameInfo.querySelector("button")
 
-    function revealPrompt () {
-        let currentPrompts = game.currentGame.prompts
-        let randomPrompt = currentPrompts[Math.floor(Math.random() * currentPrompts.length)]
-        const promptReveal = game.info.querySelector("span")
-        // display this round's prompt
-        promptReveal.innerHTML = randomPrompt
-        // remove this prompt from the current game
-        game.currentGame.prompts = currentPrompts.filter((prompt) => prompt !== randomPrompt);
-    }
-
-    function loadDrawboard () {
-        // hide instructions div
-        const inst = document.getElementById("instructions")
-        inst.style.display = "none";
-        // add canvas to drawboard div
-        
-    }
-
+    const promptButton = game.info.querySelector("button")
     promptButton.addEventListener("click", () => {
         revealPrompt();
         setTimeout(loadDrawboard, 5000);
-
+    
         })
 
+}
+
+function revealPrompt () {
     
+    let currentPrompts = game.currentGame.prompts
+    let randomPrompt = currentPrompts[Math.floor(Math.random() * currentPrompts.length)]
+    const promptReveal = game.info.querySelector("span")
+    // display this round's prompt
+    promptReveal.innerHTML = randomPrompt
+    // remove this prompt from the current game
+    game.currentGame.prompts = currentPrompts.filter((prompt) => prompt !== randomPrompt);
+
 
 }
+
+
+
 
 // function getThemePrompts() {
 //     fetch(`${baseURL}themes`)
