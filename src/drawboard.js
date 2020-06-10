@@ -21,6 +21,8 @@ function loadDrawboard () {
     drawboard.appendChild(canvas)
 }
 
-function beginDrawing () {
-
+function beginDrawing(e) {
+    console.log(e);
 }
+
+canvas.addEventListener('mousemove', draw) 
