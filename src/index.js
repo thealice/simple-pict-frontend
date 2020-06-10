@@ -176,11 +176,12 @@ function loadInstructions() {
     let team1 = game.currentGame.team1
     let team2 = game.currentGame.team2
     let scorecard = `${team1.name}: ${team1.score}<br />${team2.name}: ${team2.score}`;
+    let gameInfo;
     if(document.getElementById("game-info-container")) {
         // debugger
         gameInfo = document.getElementById("game-info-container")
     } else {
-        var gameInfo = document.createElement("div")
+        gameInfo = document.createElement("div")
         gameInfo.setAttribute("id", "game-info-container")
     }
     
@@ -250,6 +251,7 @@ function revealPrompt () {
 }
 
 function scoreForm() {
+    clearCanvas();
     drawboard.style.display = "none";
     const turnInfo = document.getElementById("turn-info");
     const roundInfo = document.getElementById("round-info")
@@ -282,7 +284,6 @@ function scoreFormHandler(e) {
     if (document.getElementById("add-score").value === "yes") {
         // add to team whose turn it is' score
         game.currentGame.turn.score += 1;
-        console.log(game.currentGame.turn.score)
         // current team gets to go again
         loadInstructions();
     }  else {
