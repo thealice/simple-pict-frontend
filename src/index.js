@@ -222,14 +222,21 @@ function loadInstructions() {
     const promptButton = gameInfo.querySelector("button")
 
     function revealPrompt () {
+        let currentPrompts = game.currentGame.prompts
+        let randomPrompt = currentPrompts[Math.floor(Math.random() * currentPrompts.length)]
         const promptReveal = game.info.querySelector("span")
-        promptReveal.innerHTML = `
-            This is where the prompt will go!
-        `
+        // display this round's prompt
+        promptReveal.innerHTML = randomPrompt
+        // remove this prompt from the current game
+        game.currentGame.prompts = currentPrompts.filter((prompt) => prompt !== randomPrompt);
     }
 
     function loadDrawboard () {
-        console.log("hide instructions and append a drawboard to after where theme goes")
+        // hide instructions div
+        const inst = document.getElementById("instructions")
+        inst.style.display = "none";
+        // add canvas to drawboard div
+        
     }
 
     promptButton.addEventListener("click", () => {
