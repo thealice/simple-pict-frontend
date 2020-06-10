@@ -6,7 +6,7 @@ canvas.style.border = "2px solid skyblue";
 ctx.strokeStyle = "#000000";
 ctx.lineJoin = "round";
 ctx.lineCap = "round";
-ctx.lineWidth = 20;
+ctx.lineWidth = 10;
 let isDrawing = false;
 // where to start and stop the line
 let lastX = 0;
@@ -29,12 +29,13 @@ function loadDrawboard () {
     canvas.addEventListener('mouseup', () => isDrawing = false);
     canvas.addEventListener('mouseout', () => isDrawing = false);
 
+    setTimeout(scoreForm, 60000);
+
 }
 
 function beginDrawing(e) {
     // function doesn't run when player is not moused down
     if(!isDrawing) return; 
-    console.log(e)
     ctx.beginPath();
     // start from
     ctx.moveTo(lastX, lastY);

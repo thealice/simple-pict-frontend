@@ -173,10 +173,15 @@ function gameSetupHandler(e) {
 }
 
 function loadInstructions() {
-    const gameInfo = document.createElement("div")
-    gameInfo.setAttribute("id", "game-info-container")
-
+    if(document.getElementById("game-info-container")) {
+        gameInfo = document.getElementById("game-info-container")
+    } else {
+        var gameInfo = document.createElement("div")
+        gameInfo.setAttribute("id", "game-info-container")
+    }
+    
     if(team1.score > 14) {
+        
         gameInfo.innerHTML = `
             Congratulations, ${game.currentGame.team1.name}, you won!!!<br>
             ${game.currentGame.scorecard}<br>
@@ -190,9 +195,9 @@ function loadInstructions() {
         `
     } else {
         gameInfo.innerHTML = `
-        <h1 class="mb-3">It's ${game.currentGame.turn.name}'s Turn!</h1>
+        <h1 id="turn-info" class="mb-3">It's ${game.currentGame.turn.name}'s Turn!</h1>
         
-        <div class="row mb-3">
+        <div id="round-info" class="row mb-3">
             <div class="col-md-auto">
                 <h2>Scorecard</h2>
                 ${game.currentGame.scorecard}
@@ -239,6 +244,47 @@ function revealPrompt () {
     // remove this prompt from the current game
     game.currentGame.prompts = currentPrompts.filter((prompt) => prompt !== randomPrompt);
 
+
+}
+
+function scoreForm() {
+    drawboard.style.display = "none";
+    const turnInfo = document.getElementById("turn-info");
+    const roundInfo = document.getElementById("round-info")
+    turnInfo.style.display = "none";
+    roundInfo.style.display = "none";
+    const form = document.createElement("form")
+    let scoreFormMarkup = `
+        <label for="addScore">Did you score a point this round?</label>
+        <select id="add-score">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+
+        <input type="submit" id="submit-score" value="Submit Score">
+    `
+
+    form.innerHTML += scoreFormMarkup
+    communications.appendChild(form)
+
+    let button = document.getElementById("submit-score")
+
+    button.addEventListener("click", (e) => {
+        scoreFormHandler(e)
+    })
+}
+
+function scoreFormHandler(e) {
+    e.preventDefault()
+    console.log(e)
+    if (document.getElementById("add-score").value === "yes") {
+        // add to team whose turn it is' score
+        // current team gets to go again
+        // loadInstructions();
+    }  else {
+        // update game turn to other team
+        // loadInstructions();
+    }
 
 }
 
