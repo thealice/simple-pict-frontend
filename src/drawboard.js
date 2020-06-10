@@ -23,6 +23,7 @@ function loadDrawboard () {
     canvas.addEventListener('mousemove', beginDrawing);
     canvas.addEventListener('mousedown', (e) => {
         isDrawing = true;
+        // start the line hwere you first put your mouse down (not where your last line leftoff)
         [lastX, lastY] = [e.offsetX, e.offsetY];
     });
     canvas.addEventListener('mouseup', () => isDrawing = false);
