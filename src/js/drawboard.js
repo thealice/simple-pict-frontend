@@ -5,7 +5,7 @@ let isDrawing = false;
 let lastX = 0;
 let lastY = 0; 
 
-document.addEventListener("DOMContentLoaded", () => {
+function loadDrawboard () {
     canvas = document.getElementById("drawboard");
     ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -15,9 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
     ctx.lineWidth = 10;
-})
-
-function loadDrawboard () {
     // hide instructions div
     const inst = document.getElementById("instructions")
     inst.style.display = "none";
