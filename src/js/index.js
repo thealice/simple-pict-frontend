@@ -178,8 +178,9 @@ function loadInstructions() {
     let scorecard = `${team1.name}: ${team1.score}<br />${team2.name}: ${team2.score}`;
     let gameInfo;
     if(document.getElementById("game-info-container")) {
-        // debugger
         gameInfo = document.getElementById("game-info-container")
+        game.turnInfo.style.display = "block";
+        game.roundInfo.style.display = "block";
     } else {
         gameInfo = document.createElement("div")
         gameInfo.setAttribute("id", "game-info-container")
@@ -229,6 +230,8 @@ function loadInstructions() {
     }
     communications.appendChild(gameInfo)
     game.info = gameInfo
+    game.turnInfo = document.getElementById("turn-info");
+    game.roundInfo = document.getElementById("round-info");
 
     const promptButton = game.info.querySelector("button")
     promptButton.addEventListener("click", () => {
@@ -253,23 +256,31 @@ function revealPrompt () {
 function scoreForm() {
     clearCanvas();
     drawboard.style.display = "none";
-    const turnInfo = document.getElementById("turn-info");
-    const roundInfo = document.getElementById("round-info")
-    turnInfo.style.display = "none";
-    roundInfo.style.display = "none";
-    const form = document.createElement("form")
-    let scoreFormMarkup = `
-        <label for="addScore">Did you score a point this round?</label>
-        <select id="add-score">
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-        </select>
+    game.turnInfo.style.display = "none";
+    game.roundInfo.style.display = "none";
+    let form;
 
-        <input type="submit" id="submit-score" value="Submit Score">
-    `
+    if(game.scoreForm) {
+        form = game.scoreForm;
+        game.scoreForm.style.display = "block";
+    } else {
+        form = document.createElement("form");
+        let scoreFormMarkup = `
+            <label for="addScore">Did you score a point this round?</label>
+            <select id="add-score">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
 
-    form.innerHTML += scoreFormMarkup
-    communications.appendChild(form)
+            <input type="submit" id="submit-score" value="Submit Score">
+        `
+
+        form.innerHTML += scoreFormMarkup
+        communications.appendChild(form)
+        game.scoreForm = form;
+    }
+
+
 
     let button = document.getElementById("submit-score")
 
@@ -280,6 +291,8 @@ function scoreForm() {
 
 function scoreFormHandler(e) {
     e.preventDefault()
+    game.scoreForm.style.display = "none";
+
     
     if (document.getElementById("add-score").value === "yes") {
         // add to team whose turn it is' score
