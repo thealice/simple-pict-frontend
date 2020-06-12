@@ -188,7 +188,7 @@ function loadInstructions() {
         gameInfo.innerHTML = `
             Congratulations, ${team1.name}, you won!!!<br>
             ${scorecard}<br>
-            <button id="rematch">Rematch</button> or <button id="new-game">New game</button>
+            <button id="rematch">Rematch</button>
         `
     } else if(team2.score > 14) {
         gameInfo.innerHTML = `
@@ -209,33 +209,41 @@ function loadInstructions() {
                 <h2>Theme</h2>
                 ${game.currentGame.theme.name}
             </div>
-            <div class="col-md-auto">
-            <h2>Countdown</h2>
-            Coundown clock goes here
-        </div>
         </div>
 
         <div id="instructions" class="row mb-3">
             <div class="col-md-auto">
                 <h2>Instructions</h2>
                 Decide whose turn it is to draw. Everyone else should avert their eyes!<br />
-                <span id="prompt-reveal">When the drawer is ready, click <button>Show prompt</button> to begin gameplay</span><br />
+                <span>When the drawer is ready, click <button id="prompt-reveal">Show prompt</button> to begin gameplay</span><br />
                 The prompt will display for 5 seconds and then ${game.currentGame.turn.name} will have 60 seconds to guess the drawing.
             </div>
         </div>
     `
     }
+
     communications.appendChild(gameInfo)
     game.info = gameInfo
     game.turnInfo = document.getElementById("turn-info");
     game.roundInfo = document.getElementById("round-info");
+    const rematchButton = document.getElementById("rematch");
+    // const newGameButton = document.getElementById("new-game");
+    const promptButton = document.getElementById("prompt-reveal");
 
-    const promptButton = game.info.querySelector("button")
     promptButton.addEventListener("click", () => {
         revealPrompt();
         setTimeout(loadDrawboard, 1000);
     
         })
+
+    rematchButton.addEventListener("click", (e) => {
+        console.log(e);
+        // create new game object with same team names and theme
+
+        // fetch all prompts
+        // repoplulate Prompt.all
+
+    })
 
 }
 
