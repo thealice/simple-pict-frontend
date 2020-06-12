@@ -67,7 +67,6 @@ function promptForm() {
 
                 <input id='create-prompt-button' type="submit" name="submit" value="Create Prompt" class="submit">     
         `
-
     div.appendChild(promptForm);
     communications.appendChild(div)
     game.promptForm = promptForm;
@@ -146,10 +145,8 @@ function loadSetup() {
                     </select>
                 </div>
             </fieldset>
-            <input id= 'setup-button' type="submit" name="submit" value="Start Game" class="submit">
-            
+            <input id= 'setup-button' type="submit" name="submit" value="Start Game" class="submit">       
         `
-
     div.appendChild(p);
     div.appendChild(setupForm);
     game.setupContainer = div;
@@ -191,7 +188,7 @@ function loadInstructions() {
         gameInfo.innerHTML = `
             Congratulations, ${team1.name}, you won!!!<br>
             ${scorecard}<br>
-            <button id="rematch">Rematch</button>
+            <button id="rematch">Rematch</button> or <button id="new-game">New game</button>
         `
     } else if(team2.score > 14) {
         gameInfo.innerHTML = `
