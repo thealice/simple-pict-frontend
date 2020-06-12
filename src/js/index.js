@@ -254,32 +254,14 @@ function revealPrompt () {
 }
 
 function scoreForm() {
+    
     clearCanvas();
     drawboard.style.display = "none";
     game.turnInfo.style.display = "none";
     game.roundInfo.style.display = "none";
-    // let scoreForm;
-
-    // if(game.scoreForm) {
-    //     scoreForm = game.scoreForm;
-    //     game.scoreForm.style.display = "block";
-    // } else {
-    //     scoreForm = document.createElement("form");
-    //     scoreForm.setAttribute("id", "score-form")
-    //     scoreForm.innerHTML = `
-    //         <label for="addScore">Did you score a point this round?</label>
-    //         <select id="add-score">
-    //             <option value="yes">Yes</option>
-    //             <option value="no">No</option>
-    //         </select>
-    
-    //         <input type="submit" id="submit-score" value="Submit Score">
-    //     `
-    
-    //     communications.appendChild(scoreForm)
-    //     game.scoreForm = scoreForm; 
-    // }
-
+    if(game.scoreForm) {
+        game.scoreForm.remove();
+    }
     const scoreForm = document.createElement("form");
     scoreForm.setAttribute("id", "score-form")
     scoreForm.innerHTML = `
@@ -291,7 +273,6 @@ function scoreForm() {
 
         <input type="submit" id="submit-score" name="submit" value="Submit Score" class="submit">
     `
-
     communications.appendChild(scoreForm)
     game.scoreForm = scoreForm; 
 
@@ -301,15 +282,12 @@ function scoreForm() {
 }
 
 function scoreFormHandler(e) {
+    
     e.preventDefault()
-
     const scoreInput = document.getElementById("add-score").value
-    console.log(scoreInput)
-    console.log(`before: ${game.currentGame.turn.score}`)
     game.scoreForm.style.display = "none";
 
     if (scoreInput === "yes") {
-
         // add to team whose turn it is' score
         game.currentGame.turn.score++;
         console.log(`after: ${game.currentGame.turn.score}`)
@@ -320,20 +298,10 @@ function scoreFormHandler(e) {
     }  else {
         // update game turn to other team
         let [team1, team2] = game.currentGame.teams
-        let turn = game.currentGame.turn
-        console.log(turn)
-        if (turn === team1) {
-            game.currentGame.turn = team2
-            console.log(game.currentGame.turn)
-        } else {
-            turn = team1
-            game.currentGame.turn
-            console.log(game.currentGame.turn)
-        }
+        game.currentGame.turn = game.currentGame.turn === team1 ? team2 : team1
         game.scoreForm.reset();
         loadInstructions();
     }
-
 }
 
 

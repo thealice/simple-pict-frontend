@@ -6,6 +6,7 @@ let lastX = 0;
 let lastY = 0; 
 
 function loadDrawboard () {
+    
     canvas = document.getElementById("drawboard");
     ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -18,10 +19,9 @@ function loadDrawboard () {
     // hide instructions div
     const inst = document.getElementById("instructions")
     inst.style.display = "none";
+    // show the canvas again
     canvas.style.display ="block";
-    // TODO: remove h1 title telling whose turn it is and add to the row with the rest of game info  
-    // add canvas to drawboard div
-    
+
     canvas.addEventListener('mousemove', beginDrawing);
     canvas.addEventListener('mousedown', (e) => {
         isDrawing = true;
@@ -31,7 +31,7 @@ function loadDrawboard () {
     canvas.addEventListener('mouseup', () => isDrawing = false);
     canvas.addEventListener('mouseout', () => isDrawing = false);
 
-    setTimeout(scoreForm, 6000);
+    setTimeout(scoreForm, 60000);
 
 }
 
