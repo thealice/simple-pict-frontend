@@ -65,7 +65,7 @@ function promptForm() {
                     </select>
                 </div>
 
-                <input id= 'create-prompt-button' type="submit" name="submit" value="Create Prompt" class="submit">     
+                <input id='create-prompt-button' type="submit" name="submit" value="Create Prompt" class="submit">     
         `
 
     div.appendChild(promptForm);
@@ -236,7 +236,7 @@ function loadInstructions() {
     const promptButton = game.info.querySelector("button")
     promptButton.addEventListener("click", () => {
         revealPrompt();
-        setTimeout(loadDrawboard, 5000);
+        setTimeout(loadDrawboard, 1000);
     
         })
 
@@ -258,51 +258,70 @@ function scoreForm() {
     drawboard.style.display = "none";
     game.turnInfo.style.display = "none";
     game.roundInfo.style.display = "none";
-    let form;
+    // let scoreForm;
 
-    if(game.scoreForm) {
-        form = game.scoreForm;
-        game.scoreForm.style.display = "block";
-    } else {
-        form = document.createElement("form");
-        let scoreFormMarkup = `
-            <label for="addScore">Did you score a point this round?</label>
-            <select id="add-score">
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-            </select>
+    // if(game.scoreForm) {
+    //     scoreForm = game.scoreForm;
+    //     game.scoreForm.style.display = "block";
+    // } else {
+    //     scoreForm = document.createElement("form");
+    //     scoreForm.setAttribute("id", "score-form")
+    //     scoreForm.innerHTML = `
+    //         <label for="addScore">Did you score a point this round?</label>
+    //         <select id="add-score">
+    //             <option value="yes">Yes</option>
+    //             <option value="no">No</option>
+    //         </select>
+    
+    //         <input type="submit" id="submit-score" value="Submit Score">
+    //     `
+    
+    //     communications.appendChild(scoreForm)
+    //     game.scoreForm = scoreForm; 
+    // }
 
-            <input type="submit" id="submit-score" value="Submit Score">
-        `
+    const scoreForm = document.createElement("form");
+    scoreForm.setAttribute("id", "score-form")
+    scoreForm.innerHTML = `
+        <label for="addScore">Did you score a point this round?</label>
+        <select id="add-score">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
 
-        form.innerHTML += scoreFormMarkup
-        communications.appendChild(form)
-        game.scoreForm = form;
-    }
+        <input type="submit" id="submit-score" name="submit" value="Submit Score" class="submit">
+    `
 
+    communications.appendChild(scoreForm)
+    game.scoreForm = scoreForm; 
 
-
-    let button = document.getElementById("submit-score")
-
-    button.addEventListener("click", (e) => {
+    scoreForm.addEventListener("submit", (e) => 
         scoreFormHandler(e)
-    })
+    )
 }
 
 function scoreFormHandler(e) {
     e.preventDefault()
+
+    const scoreInput = document.getElementById("add-score").value
+    console.log(scoreInput)
+    console.log(`before: ${game.currentGame.turn.score}`)
     game.scoreForm.style.display = "none";
 
-    
-    if (document.getElementById("add-score").value === "yes") {
+    if (scoreInput === "yes") {
+
         // add to team whose turn it is' score
-        game.currentGame.turn.score += 1;
+        game.currentGame.turn.score++;
+        console.log(`after: ${game.currentGame.turn.score}`)
+        game.scoreForm.reset();
+        console.log(scoreInput)
         // current team gets to go again
         loadInstructions();
     }  else {
         // update game turn to other team
         let [team1, team2] = game.currentGame.teams
         let turn = game.currentGame.turn
+        console.log(turn)
         if (turn === team1) {
             game.currentGame.turn = team2
             console.log(game.currentGame.turn)
@@ -311,6 +330,7 @@ function scoreFormHandler(e) {
             game.currentGame.turn
             console.log(game.currentGame.turn)
         }
+        game.scoreForm.reset();
         loadInstructions();
     }
 
