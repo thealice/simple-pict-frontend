@@ -17,7 +17,7 @@ const getPrompts = () => {
     .then(res => res.json())
     .then(prompts => {
         prompts.data.forEach(prompt => {
-            let themeObj = Theme.all.find(themeObj => themeObj.id === prompt.attributes.theme_id);
+            let themeObj = Theme.all.find(theme => theme.id === prompt.attributes.theme.id);
             new Prompt(prompt.attributes.id, prompt.attributes.content, themeObj)
         })
     })
