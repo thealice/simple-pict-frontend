@@ -183,19 +183,43 @@ function loadInstructions() {
         gameInfo.setAttribute("id", "game-info-container")
     }
     
-    if(team1.score > 14) {
+    if(team1.score > 2) {
         
         gameInfo.innerHTML = `
             Congratulations, ${team1.name}, you won!!!<br>
             ${scorecard}<br>
             <button id="rematch">Rematch</button>
         `
-    } else if(team2.score > 14) {
+        communications.appendChild(gameInfo)
+        const rematchButton = document.getElementById("rematch");
+
+        rematchButton.addEventListener("click", (e) => {
+            // fetch all prompts
+            // repoplulate Prompt.all
+            // create new game object with same team names and theme
+            game = new Game(game.currentGame.team1, game.currentGame.team2, game.currentGame.theme.id)
+
+
+        })
+    } else if(team2.score > 2) {
         gameInfo.innerHTML = `
             Congratulations, ${team2.name}, you won!!!<br>
             ${scorecard}<br>
             <button id="rematch">Rematch</button>
         `
+        communications.appendChild(gameInfo)
+        const rematchButton = document.getElementById("rematch");
+
+        rematchButton.addEventListener("click", (e) => {
+            console.log(game.currentGame.teams);
+            console.log(game.currentGame.theme);
+            console.log(e.attributes)
+            // create new game object with same team names and theme
+            game = new Game(game.currentGame.team1, game.currentGame.team2, game.currentGame.theme)
+            // fetch all prompts
+            // repoplulate Prompt.all
+
+        })
     } else {
         gameInfo.innerHTML = `
         <h1 id="turn-info" class="mb-3">It's ${game.currentGame.turn.name}'s Turn!</h1>
@@ -220,30 +244,19 @@ function loadInstructions() {
             </div>
         </div>
     `
+        communications.appendChild(gameInfo)
+        const promptButton = document.getElementById("prompt-reveal");
+        promptButton.addEventListener("click", () => {
+            revealPrompt();
+            setTimeout(loadDrawboard, 1000);
+
+            })
     }
 
-    communications.appendChild(gameInfo)
+
     game.info = gameInfo
     game.turnInfo = document.getElementById("turn-info");
     game.roundInfo = document.getElementById("round-info");
-    const rematchButton = document.getElementById("rematch");
-    // const newGameButton = document.getElementById("new-game");
-    const promptButton = document.getElementById("prompt-reveal");
-
-    promptButton.addEventListener("click", () => {
-        revealPrompt();
-        setTimeout(loadDrawboard, 1000);
-    
-        })
-
-    rematchButton.addEventListener("click", (e) => {
-        console.log(e);
-        // create new game object with same team names and theme
-
-        // fetch all prompts
-        // repoplulate Prompt.all
-
-    })
 
 }
 
