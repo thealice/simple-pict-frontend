@@ -28,10 +28,8 @@ function getThemes() {
         themes.data.forEach(theme => {
             let themeObj = new Theme(theme.attributes.name, theme.attributes.id)
             theme.attributes.prompts.forEach(prompt => {
-                let promptObj = new Prompt(prompt.content)
-                // Right now I'm only storing the prompt content
-                // if there were more attributes I'd want to do this differently
-                themeObj.prompts.push(promptObj.content)
+                let promptObj = new Prompt(prompt.id, prompt.content, themeObj)
+                themeObj.prompts.push(promptObj)
             })
         })
         promptForm();
@@ -92,10 +90,6 @@ function createPromptFormHandler(e) {
     const promptThemeId =  parseInt(document.getElementById("theme_id").value)
     // send prompt to backend to create a new Prompt and store it in the DB
     postFetch(promptContentInput, promptThemeId)
-    // Add the new prompt to the OO JS version of Themes
-    //  TODO: create a find method for Theme class
-    const promptTheme = Theme.all.find(themeObj => themeObj.id === promptThemeId);
-    promptTheme.prompts.push(promptContentInput)
     
     game.promptForm.reset();
 }
@@ -112,7 +106,10 @@ function postFetch(content, theme_id) {
     })
     .then(response => response.json())
     .then(prompt => {
-        console.log('Success:', prompt);
+        console.log(prompt);
+        // Add the new prompt to the OO JS version of Themes
+        const promptTheme = Theme.all.find(themeObj => themeObj.id === theme_id);
+        promptTheme.prompts.push(new Prompt(prompt.id, prompt.content, promptTheme))
     })
 }
 
@@ -164,8 +161,9 @@ function gameSetupHandler(e) {
     const team1Input = document.getElementById("team1").value
     const team2Input = document.getElementById("team2").value
     const themeId = parseInt(document.getElementById("theme_name").value)
+    const theme = Theme.all.find(themeObj => themeObj.id === themeId)
 
-    game.currentGame = new Game(team1Input, team2Input, themeId)
+    game.currentGame = new Game(team1Input, team2Input, theme)
     loadInstructions();
 }
 
@@ -194,11 +192,11 @@ function loadInstructions() {
         const rematchButton = document.getElementById("rematch");
 
         rematchButton.addEventListener("click", (e) => {
-            // fetch all prompts
-            // repoplulate Prompt.all
+            console.log(e)
+            // fetch all prompts and repoplulate Prompt.all
+            getPrompts();
             // create new game object with same team names and theme
-            game = new Game(game.currentGame.team1, game.currentGame.team2, game.currentGame.theme.id)
-
+            game.currentGame = new Game(game.currentGame.team1.name, game.currentGame.team2.name, game.currentGame.theme)
 
         })
     } else if(team2.score > 2) {
@@ -211,13 +209,11 @@ function loadInstructions() {
         const rematchButton = document.getElementById("rematch");
 
         rematchButton.addEventListener("click", (e) => {
-            console.log(game.currentGame.teams);
-            console.log(game.currentGame.theme);
-            console.log(e.attributes)
+            console.log(e)
+            // fetch all prompts and repoplulate Prompt.all
+            getPrompts();
             // create new game object with same team names and theme
-            game = new Game(game.currentGame.team1, game.currentGame.team2, game.currentGame.theme)
-            // fetch all prompts
-            // repoplulate Prompt.all
+            game.currentGame = new Game(game.currentGame.team1.name, game.currentGame.team2.name, game.currentGame.theme)
 
         })
     } else {
@@ -266,7 +262,7 @@ function revealPrompt () {
     let randomPrompt = currentPrompts[Math.floor(Math.random() * currentPrompts.length)]
     const promptReveal = game.info.querySelector("span")
     // display this round's prompt
-    promptReveal.innerHTML = randomPrompt
+    promptReveal.innerHTML = randomPrompt.content
     // remove this prompt from the current game
     game.currentGame.prompts = currentPrompts.filter((prompt) => prompt !== randomPrompt);
 }
