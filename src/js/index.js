@@ -24,7 +24,6 @@ function getThemes() {
     fetch(`${baseURL}themes`)
     .then(res => res.json())
     .then(themes => {
-        // TODO: change to map rather than forEach?
         themes.data.forEach(theme => {
             let themeObj = new Theme(theme.attributes.name, theme.attributes.id)
             theme.attributes.prompts.forEach(prompt => {
@@ -158,11 +157,17 @@ function loadSetup() {
 function gameSetupHandler(e) {
     game.setupContainer.style.display = "none";
     e.preventDefault()
+    getPrompts();
     const team1Input = document.getElementById("team1").value
     const team2Input = document.getElementById("team2").value
     const themeId = parseInt(document.getElementById("theme_name").value)
-    const theme = Theme.all.find(themeObj => themeObj.id === themeId)
-
+    let theme;
+    if(!themeId) {
+        theme = new Theme("All Themes", 0)
+        theme.prompts = Prompt.all
+    } else {
+        theme = Theme.all.find(themeObj => themeObj.id === themeId)
+    }
     game.currentGame = new Game(team1Input, team2Input, theme)
     loadInstructions();
 }
@@ -193,10 +198,9 @@ function loadInstructions() {
 
         rematchButton.addEventListener("click", (e) => {
             console.log(e)
-            // fetch all prompts and repoplulate Prompt.all
-            getPrompts();
             // create new game object with same team names and theme
             game.currentGame = new Game(game.currentGame.team1.name, game.currentGame.team2.name, game.currentGame.theme)
+            loadInstructions();
 
         })
     } else if(team2.score > 2) {
