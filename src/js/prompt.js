@@ -30,7 +30,7 @@ function promptForm() {
     const p = document.createElement("p")
     p.innerHTML = `
         <h1>Hi, Welcome to Simple Pictionary!</h1>
-        You can add new cards to the deck below. Otherwise, <button id="begin-setup">Let's begin</button>
+        You can add new cards to the deck below. Otherwise, <button id="begin-setup" class="btn-primary">Let's begin</button>
     `
     div.appendChild(p);
 
@@ -39,12 +39,12 @@ function promptForm() {
     promptForm.innerHTML = `
  
                 <div class="mb-10">
-                    <label for="prompt-content">Enter your prompt (the word(s) that will be drawn):</label><br />
+                    <label for="prompt-content">Enter your prompt: </label>
                     <input type="text" name="content" id="prompt-content">
                 </div>
 
                 <div class="mb-10">
-                    <label for="theme_id">File it under:</label><br />
+                    <label for="theme_id">File it under: </label>
                     <select name="theme_id" id="theme_id">
                     </select>
                 </div>

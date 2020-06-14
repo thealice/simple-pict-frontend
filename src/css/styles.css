@@ -1,3 +1,11 @@
-/* .hidden {
-    display: none;
-} */
+#create-prompt-button, #setup-button {
+    margin-top: 10px;
+}
+
+#prompt-content {
+    margin-bottom: 10px;
+}
+
+#add-score {
+    margin-right: 5px;
+}

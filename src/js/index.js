@@ -124,9 +124,11 @@ function loadInstructions() {
         <div id="instructions" class="row mb-3">
             <div class="col-md-auto">
                 <h2>Instructions</h2>
-                Decide whose turn it is to draw. Everyone else should avert their eyes!<br />
-                <span>When the drawer is ready, click <button id="prompt-reveal">Show prompt</button> to begin gameplay</span><br />
-                The prompt will display for 5 seconds and then ${game.currentGame.turn.name} will have 60 seconds to guess the drawing.
+                <ul>
+                    <li>Decide whose turn it is to draw. Everyone else should avert their eyes!</li>
+                    <li><span>When the drawer is ready, click <button id="prompt-reveal" class="btn-danger">Show prompt</button> to begin gameplay</span></li>
+                    <li>The prompt will display for 5 seconds and then ${game.currentGame.turn.name} will have 60 seconds to guess the drawing.</li>
+                </ul>
             </div>
         </div>
     `
@@ -138,7 +140,6 @@ function loadInstructions() {
             setTimeout(loadDrawboard, 5000);
         })
     }
-
 
     game.info = gameInfo
     game.headerInfo = document.getElementById("header-info");
@@ -166,7 +167,7 @@ function scoreForm() {
             <option value="no">No</option>
         </select>
 
-        <input type="submit" id="submit-score" name="submit" value="Submit Score" class="submit">
+        <input type="submit" id="submit-score" name="submit" value="Submit Score" class="btn-primary">
     `
     communications.appendChild(scoreForm)
     game.scoreForm = scoreForm; 
