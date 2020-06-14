@@ -31,7 +31,7 @@ function loadDrawboard () {
     canvas.addEventListener('mouseup', () => isDrawing = false);
     canvas.addEventListener('mouseout', () => isDrawing = false);
 
-    setTimeout(scoreForm, 60000);
+    setTimeout(scoreForm, 1000);
 
 }
 
