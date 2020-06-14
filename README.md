@@ -35,7 +35,7 @@ Then, fork and clone this repo:
 
 ## Authors
 
-* **Alice Freda** - [Thealice](https://github.com/thealice)
+* Alice Freda - [Thealice](https://github.com/thealice)
 
 ## License
 
