@@ -2,6 +2,8 @@
 
 A simple pictionary-like game built with JavaScript and a Rails API backend. Repo for the backend can be found [here](https://github.com/thealice/simple-pict-backend). 
 
+Video walkthrough of how the game works: [https://youtu.be/olbEbbg4LL0](https://youtu.be/olbEbbg4LL0)
+
 ## Getting Started
 
 To get Simple Pictionary Front-End running on your local machine, first fork and clone the [Backend](https://github.com/thealice/simple-pict-backend) (instructions in that readme on how to run). 
