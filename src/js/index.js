@@ -3,6 +3,8 @@ let game = {}
 
 document.addEventListener('DOMContentLoaded', () => {
     const communications = document.getElementById("communications")
+    const drawboard = document.getElementById('drawboard')
+    drawboard.style.display = "none";
     getThemes();
 });
 
@@ -19,25 +21,25 @@ function renderThemeOptions(arrayOfThemeObjs, where_id) {
 function loadSetup() {
     const div = document.getElementById("game-setup-container")
     let p = div.querySelector("p")
-    p.innerText = `Let's get this game going`
-
+    p.innerHTML = `
+        <h1>Let's get this game going</h1>
+        <hr>
+    `
     const setupForm = document.createElement("form")
     setupForm.setAttribute("id", "game-setup")
     setupForm.innerHTML = `
-            <fieldset>
+            <fieldset class="pb-3">
                 <legend>Setup your teams:</legend>
                 <div>
-                <label for="team1_name">
-                Team1 Name:
-                </label><br>
+                    <label for="team1_name">Team 1 Name:</label>
                     <input type="text" name="team1" id="team1" placeholder="Enter first Team name...">
                 </div>
-            <div>
-                <label for="team2_name">Team 2 Name:</label><br>
-                <input type="text" name="team2" id="team2" placeholder="Enter second Team name...">
-            </div>
+                <div>
+                    <label for="team2_name">Team 2 Name:</label>
+                    <input type="text" name="team2" id="team2" placeholder="Enter second Team name...">
+                </div>
             </fieldset>
-            <fieldset>
+            <fieldset class="pb-3">
                 <legend>Select your theme:</legend>
                 <div>
                     <select name="theme_name" id="theme_name">
@@ -108,26 +110,28 @@ function loadInstructions() {
         
     } else {
         gameInfo.innerHTML = `
-        <h1 id="header-info" class="mb-3">It's ${game.currentGame.turn.name}'s Turn!</h1>
-        
-        <div id="round-info" class="row mb-3">
+        <div id="header-info">
+            <h1>It's ${game.currentGame.turn.name}'s Turn!</h1>
+            <hr>
+        </div>
+        <div id="round-info" class="row pb-3">
             <div class="col-md-auto">
                 <h2>Scorecard</h2>
-                ${scorecard}
+                <p>${scorecard}</p>
             </div>
             <div class="col-md-auto">
                 <h2>Theme</h2>
-                ${game.currentGame.theme.name}
+                <p>${game.currentGame.theme.name}</p>
             </div>
         </div>
 
-        <div id="instructions" class="row mb-3">
+        <div id="instructions" class="row pb-3">
             <div class="col-md-auto">
                 <h2>Instructions</h2>
                 <ul>
-                    <li>Decide whose turn it is to draw. Everyone else should avert their eyes!</li>
-                    <li><span>When the drawer is ready, click <button id="prompt-reveal" class="btn-danger">Show prompt</button> to begin gameplay</span></li>
-                    <li>The prompt will display for 5 seconds and then ${game.currentGame.turn.name} will have 60 seconds to guess the drawing.</li>
+                    <li>Decide whose turn it is to draw. <em>Everyone else should avert their eyes!</em></li>
+                    <li><span>When the drawer is ready, click <button id="prompt-reveal" class="btn-pink">Show prompt</button> to begin gameplay</span></li>
+                    <li>The prompt will display for <strong>5 seconds</strong> and then ${game.currentGame.turn.name} will have <strong>60 seconds</strong> to guess the drawing.</li>
                 </ul>
             </div>
         </div>

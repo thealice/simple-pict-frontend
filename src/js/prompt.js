@@ -29,8 +29,9 @@ function promptForm() {
 
     const p = document.createElement("p")
     p.innerHTML = `
-        <h1>Hi, Welcome to Simple Pictionary!</h1>
-        You can add new cards to the deck below. Otherwise, <button id="begin-setup" class="btn-primary">Let's begin</button>
+        <h1>Welcome to Simple Pictionary!</h1>
+        <hr>
+        You can add new cards to the deck below. Otherwise, <button id="begin-setup" class="btn-pink">Let's begin</button>
     `
     div.appendChild(p);
 

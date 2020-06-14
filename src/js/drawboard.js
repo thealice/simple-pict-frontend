@@ -6,12 +6,11 @@ let lastX = 0;
 let lastY = 0; 
 
 function loadDrawboard () {
-    
-    canvas = document.getElementById("drawboard");
+    canvas = document.querySelector("canvas");
+    drawboard.style.display = "block";
     ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    canvas.style.border = "2px solid black";
     ctx.strokeStyle = "#000000";
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
@@ -26,7 +25,7 @@ function loadDrawboard () {
     turnInfo.innerHTML = `
         <div class="col-md-auto">
             <h2>Turn</h2>
-            ${game.currentGame.turn.name}
+            <p>${game.currentGame.turn.name}</p>
         </div>
     `
     game.roundInfo.prepend(turnInfo)
