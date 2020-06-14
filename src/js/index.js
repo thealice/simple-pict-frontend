@@ -191,35 +191,16 @@ function loadInstructions() {
         gameInfo.innerHTML = `
             Congratulations, ${team1.name}, you won!!!<br>
             ${scorecard}<br>
-            <button id="rematch">Rematch</button>
         `
         communications.appendChild(gameInfo)
-        const rematchButton = document.getElementById("rematch");
-
-        rematchButton.addEventListener("click", (e) => {
-            console.log(e)
-            // create new game object with same team names and theme
-            game.currentGame = new Game(game.currentGame.team1.name, game.currentGame.team2.name, game.currentGame.theme)
-            loadInstructions();
-
-        })
+        
     } else if(team2.score > 2) {
         gameInfo.innerHTML = `
             Congratulations, ${team2.name}, you won!!!<br>
             ${scorecard}<br>
-            <button id="rematch">Rematch</button>
         `
         communications.appendChild(gameInfo)
-        const rematchButton = document.getElementById("rematch");
-
-        rematchButton.addEventListener("click", (e) => {
-            console.log(e)
-            // fetch all prompts and repoplulate Prompt.all
-            getPrompts();
-            // create new game object with same team names and theme
-            game.currentGame = new Game(game.currentGame.team1.name, game.currentGame.team2.name, game.currentGame.theme)
-
-        })
+        
     } else {
         gameInfo.innerHTML = `
         <h1 id="turn-info" class="mb-3">It's ${game.currentGame.turn.name}'s Turn!</h1>
@@ -246,11 +227,11 @@ function loadInstructions() {
     `
         communications.appendChild(gameInfo)
         const promptButton = document.getElementById("prompt-reveal");
+        
         promptButton.addEventListener("click", () => {
             revealPrompt();
             setTimeout(loadDrawboard, 1000);
-
-            })
+        })
     }
 
 
