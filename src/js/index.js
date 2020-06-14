@@ -2,19 +2,17 @@ const baseURL = "http://localhost:3000/api/v1/";
 let game = {}
 
 document.addEventListener('DOMContentLoaded', () => {
-    const drawboard = document.getElementById("drawboard")
     const communications = document.getElementById("communications")
     getThemes();
 
 });
 
-function renderThemeOptions(arrayOfThemeObjs, id) {
-    let selectOptions = document.getElementById(id)
+function renderThemeOptions(arrayOfThemeObjs, where_id) {
+    let selectOptions = document.getElementById(where_id)
     arrayOfThemeObjs.forEach(themeObj => {
         let themeOption = document.createElement("option");
         themeOption.innerHTML += themeObj.name;
         themeOption.value = themeObj.id;
-        // if(game.currentGame && game.currentGame.theme.name === themeObj.name) { themeOption.setAttribute("selected", "selected") }
         selectOptions.appendChild(themeOption);
     })
 }
@@ -253,14 +251,16 @@ function revealPrompt () {
 }
 
 function scoreForm() {
-    
+    // clear the drawboard and remove it and the round details from view
     clearCanvas();
-    drawboard.style.display = "none";
+    canvas.style.display = "none";
     game.turnInfo.style.display = "none";
     game.roundInfo.style.display = "none";
+    // if a scoreForm has been shown before, get rid of it entirely
     if(game.scoreForm) {
         game.scoreForm.remove();
     }
+    // create a scoreForm and add it to DOM
     const scoreForm = document.createElement("form");
     scoreForm.setAttribute("id", "score-form")
     scoreForm.innerHTML = `
@@ -281,13 +281,15 @@ function scoreForm() {
 }
 
 function scoreFormHandler(e) {
-    
+    // prevent form submit from reloading the page
     e.preventDefault()
+    // store the form response in a variable
     const scoreInput = document.getElementById("add-score").value
+    // hide theform
     game.scoreForm.style.display = "none";
 
     if (scoreInput === "yes") {
-        // add to team whose turn it is' score
+        // add to team-whose-turn-it-is' score
         game.currentGame.turn.score++;
         console.log(`after: ${game.currentGame.turn.score}`)
         game.scoreForm.reset();

@@ -22,23 +22,3 @@ const getPrompts = () => {
         })
     })
 }
-
-// function getThemes() {
-
-//     fetch(`${baseURL}themes`)
-//     .then(res => res.json())
-//     .then(themes => {
-//         // TODO: change to map rather than forEach?
-//         themes.data.forEach(theme => {
-//             let themeObj = new Theme(theme.attributes.name, theme.attributes.id)
-//             theme.attributes.prompts.forEach(prompt => {
-//                 let promptObj = new Prompt(prompt.content)
-//                 // Right now I'm only storing the prompt content
-//                 // if there were more attributes I'd want to do this differently
-//                 themeObj.prompts.push(promptObj.content)
-//             })
-//         })
-//         promptForm();
-//     })
-
-// }
