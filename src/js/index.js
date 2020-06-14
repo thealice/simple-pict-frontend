@@ -32,11 +32,11 @@ function loadSetup() {
                 <legend>Setup your teams:</legend>
                 <div>
                     <label for="team1_name">Team 1 Name:</label>
-                    <input type="text" name="team1" id="team1" placeholder="Enter first Team name...">
+                    <input type="text" name="team1" id="team1" placeholder="Enter first team name...">
                 </div>
                 <div>
                     <label for="team2_name">Team 2 Name:</label>
-                    <input type="text" name="team2" id="team2" placeholder="Enter second Team name...">
+                    <input type="text" name="team2" id="team2" placeholder="Enter second team name...">
                 </div>
             </fieldset>
             <fieldset class="pb-3">
@@ -93,7 +93,7 @@ function loadInstructions() {
         gameInfo.setAttribute("id", "game-info-container")
     }
     
-    if(team1.score > 11) {
+    if(team1.score > 9) {
         
         gameInfo.innerHTML = `
             Congratulations, ${team1.name}, you won!!!<br>
@@ -101,7 +101,7 @@ function loadInstructions() {
         `
         communications.appendChild(gameInfo)
         
-    } else if(team2.score > 11) {
+    } else if(team2.score > 9) {
         gameInfo.innerHTML = `
             Congratulations, ${team2.name}, you won!!!<br>
             ${scorecard}<br>
