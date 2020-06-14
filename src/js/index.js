@@ -4,7 +4,6 @@ let game = {}
 document.addEventListener('DOMContentLoaded', () => {
     const communications = document.getElementById("communications")
     getThemes();
-
 });
 
 function renderThemeOptions(arrayOfThemeObjs, where_id) {
@@ -18,7 +17,7 @@ function renderThemeOptions(arrayOfThemeObjs, where_id) {
 }
 
 function loadSetup() {
-    let div = document.getElementById("game-setup-container")
+    const div = document.getElementById("game-setup-container")
     let p = div.querySelector("p")
     p.innerText = `Let's get this game going`
 
@@ -84,14 +83,15 @@ function loadInstructions() {
     let gameInfo;
     if(document.getElementById("game-info-container")) {
         gameInfo = document.getElementById("game-info-container")
-        game.turnInfo.style.display = "block";
+        game.headerInfo.style.display = "block";
         game.roundInfo.style.display = "block";
+        if(game.turnInfo) { game.turnInfo.remove()}
     } else {
         gameInfo = document.createElement("div")
         gameInfo.setAttribute("id", "game-info-container")
     }
     
-    if(team1.score > 2) {
+    if(team1.score > 11) {
         
         gameInfo.innerHTML = `
             Congratulations, ${team1.name}, you won!!!<br>
@@ -99,7 +99,7 @@ function loadInstructions() {
         `
         communications.appendChild(gameInfo)
         
-    } else if(team2.score > 2) {
+    } else if(team2.score > 11) {
         gameInfo.innerHTML = `
             Congratulations, ${team2.name}, you won!!!<br>
             ${scorecard}<br>
@@ -108,7 +108,7 @@ function loadInstructions() {
         
     } else {
         gameInfo.innerHTML = `
-        <h1 id="turn-info" class="mb-3">It's ${game.currentGame.turn.name}'s Turn!</h1>
+        <h1 id="header-info" class="mb-3">It's ${game.currentGame.turn.name}'s Turn!</h1>
         
         <div id="round-info" class="row mb-3">
             <div class="col-md-auto">
@@ -135,13 +135,13 @@ function loadInstructions() {
         
         promptButton.addEventListener("click", () => {
             revealPrompt();
-            setTimeout(loadDrawboard, 1000);
+            setTimeout(loadDrawboard, 5000);
         })
     }
 
 
     game.info = gameInfo
-    game.turnInfo = document.getElementById("turn-info");
+    game.headerInfo = document.getElementById("header-info");
     game.roundInfo = document.getElementById("round-info");
 
 }
@@ -150,7 +150,7 @@ function scoreForm() {
     // clear the drawboard and remove it and the round details from view
     clearCanvas();
     canvas.style.display = "none";
-    game.turnInfo.style.display = "none";
+    game.headerInfo.style.display = "none";
     game.roundInfo.style.display = "none";
     // if a scoreForm has been shown before, get rid of it entirely
     if(game.scoreForm) {

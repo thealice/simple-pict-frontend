@@ -11,14 +11,26 @@ function loadDrawboard () {
     ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    canvas.style.border = "2px solid skyblue";
+    canvas.style.border = "2px solid black";
     ctx.strokeStyle = "#000000";
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
-    ctx.lineWidth = 10;
+    ctx.lineWidth = 5;
     // hide instructions div
     const inst = document.getElementById("instructions")
     inst.style.display = "none";
+    // hide header
+    game.headerInfo.style.display = "none";
+    // add turn info to gameInfo
+    const turnInfo = document.createElement("div", { id: "turn-info" });
+    turnInfo.innerHTML = `
+        <div class="col-md-auto">
+            <h2>Turn</h2>
+            ${game.currentGame.turn.name}
+        </div>
+    `
+    game.roundInfo.prepend(turnInfo)
+    game.turnInfo = turnInfo;
     // show the canvas again
     canvas.style.display ="block";
 
@@ -31,7 +43,7 @@ function loadDrawboard () {
     canvas.addEventListener('mouseup', () => isDrawing = false);
     canvas.addEventListener('mouseout', () => isDrawing = false);
 
-    setTimeout(scoreForm, 1000);
+    setTimeout(scoreForm, 60000);
 
 }
 
