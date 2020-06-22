@@ -103,6 +103,7 @@ function postFetch(content, theme_id) {
 function revealPrompt () {
     
     let currentPrompts = game.currentGame.prompts
+    // select random prompt
     let randomPrompt = currentPrompts[Math.floor(Math.random() * currentPrompts.length)]
     const promptReveal = game.info.querySelector("span")
     // display this round's prompt
