@@ -8,15 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     getThemes();
 });
 
-function renderThemeOptions(arrayOfThemeObjs, where_id) {
-    let selectOptions = document.getElementById(where_id)
-    arrayOfThemeObjs.forEach(themeObj => {
-        let themeOption = document.createElement("option");
-        themeOption.innerHTML += themeObj.name;
-        themeOption.value = themeObj.id;
-        selectOptions.appendChild(themeOption);
-    })
-}
 
 function loadSetup() {
     const div = document.getElementById("game-setup-container")

@@ -1,14 +1,3 @@
-class Theme {
-    constructor(name, id) {
-        this.name = name;
-        this.id = id;
-        this.prompts = []
-        Theme.all.push(this);
-    }
-
-    static all = [];
-}
-
 const getThemes = () => {
 
     fetch(`${baseURL}themes`)
@@ -24,4 +13,14 @@ const getThemes = () => {
         promptForm();
     })
 
+}
+
+function renderThemeOptions(arrayOfThemeObjs, where_id) {
+    let selectOptions = document.getElementById(where_id)
+    arrayOfThemeObjs.forEach(themeObj => {
+        let themeOption = document.createElement("option");
+        themeOption.innerHTML += themeObj.name;
+        themeOption.value = themeObj.id;
+        selectOptions.appendChild(themeOption);
+    })
 }
