@@ -39,7 +39,7 @@ function promptForm() {
                 <input id='create-prompt-button' type="submit" name="submit" value="Create Prompt" class="submit">     
         `
     div.appendChild(promptForm);
-    communications.appendChild(div)
+    document.getElementById("communications").appendChild(div)
     game.promptForm = promptForm;
 
     renderThemeOptions(Theme.all, "theme_id")
@@ -91,9 +91,8 @@ function revealPrompt () {
     let currentPrompts = game.currentGame.prompts
     // select random prompt
     let randomPrompt = currentPrompts[Math.floor(Math.random() * currentPrompts.length)]
-    const promptReveal = game.info.querySelector("span")
     // display this round's prompt
-    promptReveal.innerHTML = randomPrompt.content
+    document.getElementById("prompt").innerHTML = randomPrompt.content
     // remove this prompt from the current game
     game.currentGame.prompts = currentPrompts.filter((prompt) => prompt !== randomPrompt);
 }
