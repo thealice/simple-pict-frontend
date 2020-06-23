@@ -1,4 +1,3 @@
-let canvas;
 let ctx;
 let isDrawing = false;
 // where to start and stop the line
@@ -6,8 +5,7 @@ let lastX = 0;
 let lastY = 0; 
 
 function loadDrawboard () {
-    canvas = document.querySelector("canvas");
-    drawboard.style.display = "block";
+    canvas.style.display = "block";
     ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;

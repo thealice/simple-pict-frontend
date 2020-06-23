@@ -3,8 +3,8 @@ let game = {}
 
 document.addEventListener('DOMContentLoaded', () => {
     const communications = document.getElementById("communications")
-    const drawboard = document.getElementById('drawboard')
-    drawboard.style.display = "none";
+    const canvas = document.getElementById('canvas')
+    canvas.style.display = "none";
     getThemes();
 });
 
