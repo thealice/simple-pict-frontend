@@ -2,23 +2,14 @@ const baseURL = "http://localhost:3000/api/v1/";
 let game = {}
 
 document.addEventListener('DOMContentLoaded', () => {
-    const communications = document.getElementById("communications")
+    
     const canvas = document.getElementById('canvas')
     canvas.style.display = "none";
     getThemes();
 });
 
-
-function loadSetup() {
-    const div = document.getElementById("game-setup-container")
-    let p = div.querySelector("p")
-    p.innerHTML = `
-        <h1>Let's get this game going</h1>
-        <hr>
+const setupFormTemplate = () => (
     `
-    const setupForm = document.createElement("form")
-    setupForm.setAttribute("id", "game-setup")
-    setupForm.innerHTML = `
             <fieldset class="pb-3">
                 <legend>Setup your teams:</legend>
                 <div>
@@ -40,7 +31,19 @@ function loadSetup() {
             </fieldset>
             <input id= 'setup-button' type="submit" name="submit" value="Start Game" class="submit">       
         `
-    div.appendChild(p);
+)
+
+function loadSetup() {
+    const div = document.getElementById("game-setup-container")
+    let p = div.querySelector("p")
+    p.innerHTML = `
+        <h1>Let's get this game going</h1>
+        <hr>
+    `
+    const setupForm = document.createElement("form")
+    setupForm.setAttribute("id", "game-setup")
+    // template above
+    setupForm.innerHTML = setupFormTemplate()
     div.appendChild(setupForm);
     game.setupContainer = div;
     renderThemeOptions(Theme.all, "theme_name")
@@ -69,13 +72,21 @@ function gameSetupHandler(e) {
     loadInstructions();
 }
 
+const winner = (team, gameInfo, scorecard) => {
+    gameInfo.innerHTML = `
+            Congratulations, ${team.name}, you won!!!<br>
+            ${scorecard}<br>
+        `
+        communications.appendChild(gameInfo)
+}
+
 function loadInstructions() {
-    let team1 = game.currentGame.team1
-    let team2 = game.currentGame.team2
+    const communications = document.getElementById("communications")
+    let [team1, team2] = [game.currentGame.team1, game.currentGame.team2]
     let scorecard = `${team1.name}: ${team1.score}<br />${team2.name}: ${team2.score}`;
-    let gameInfo;
-    if(document.getElementById("game-info-container")) {
-        gameInfo = document.getElementById("game-info-container")
+    let gameInfo = document.getElementById("game-info-container");
+
+    if(gameInfo) {
         game.headerInfo.style.display = "block";
         game.roundInfo.style.display = "block";
         if(game.turnInfo) { game.turnInfo.remove()}
@@ -85,20 +96,9 @@ function loadInstructions() {
     }
     
     if(team1.score > 9) {
-        
-        gameInfo.innerHTML = `
-            Congratulations, ${team1.name}, you won!!!<br>
-            ${scorecard}<br>
-        `
-        communications.appendChild(gameInfo)
-        
+        winner(team1, gameInfo, scorecard) 
     } else if(team2.score > 9) {
-        gameInfo.innerHTML = `
-            Congratulations, ${team2.name}, you won!!!<br>
-            ${scorecard}<br>
-        `
-        communications.appendChild(gameInfo)
-        
+        winner(team2, gameInfo, scorecard) 
     } else {
         gameInfo.innerHTML = `
         <div id="header-info">
@@ -121,22 +121,18 @@ function loadInstructions() {
                 <h2>Instructions</h2>
                 <ul>
                     <li>Decide whose turn it is to draw. <em>Everyone else should avert their eyes!</em></li>
-                    <li><span>When the drawer is ready, click <button id="prompt-reveal" class="btn-pink">Show prompt</button> to begin gameplay</span></li>
+                    <li><span id="prompt">When the drawer is ready, click <button id="prompt-reveal" class="btn-pink">Show prompt</button> to begin gameplay</span></li>
                     <li>The prompt will display for <strong>5 seconds</strong> and then ${game.currentGame.turn.name} will have <strong>60 seconds</strong> to guess the drawing.</li>
                 </ul>
             </div>
         </div>
     `
         communications.appendChild(gameInfo)
-        const promptButton = document.getElementById("prompt-reveal");
-        
-        promptButton.addEventListener("click", () => {
+        document.getElementById("prompt-reveal").addEventListener("click", () => {
             revealPrompt();
             setTimeout(loadDrawboard, 5000);
         })
     }
-
-    game.info = gameInfo
     game.headerInfo = document.getElementById("header-info");
     game.roundInfo = document.getElementById("round-info");
 
@@ -164,7 +160,7 @@ function scoreForm() {
 
         <input type="submit" id="submit-score" name="submit" value="Submit Score" class="btn-primary">
     `
-    communications.appendChild(scoreForm)
+    document.getElementById("communications").appendChild(scoreForm)
     game.scoreForm = scoreForm; 
 
     scoreForm.addEventListener("submit", (e) => 
