@@ -1,4 +1,5 @@
 let ctx;
+// we can change this and set to true when mouse is down to indicate begin drawing
 let isDrawing = false;
 // where to start and stop the line
 let lastX = 0;
@@ -50,7 +51,7 @@ function beginDrawing(e) {
     ctx.beginPath();
     // start from
     ctx.moveTo(lastX, lastY);
-    // go to
+    // go to where the mouse is based on the event
     ctx.lineTo(e.offsetX, e.offsetY);
     ctx.stroke();
     // update last x and y variables to be whereever they were while drawing
