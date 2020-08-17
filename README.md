@@ -1,6 +1,6 @@
 # Simple Pictionary
 
-A simple pictionary-like game built with JavaScript and a Rails API backend. Repo for the backend can be found [here](https://github.com/thealice/simple-pict-backend). 
+A simple pictionary-like game built with JavaScript and a Rails API backend. Repo for the backend can be found [here](https://github.com/thealice/simple-pict-backend). A blogpost to describe how I build out the drawing functionality can be found [here](https://thealice.github.io/lessons_learned_from_building_my_first_javascript_app).
 
 Video walkthrough of how the game works: [https://youtu.be/olbEbbg4LL0](https://youtu.be/olbEbbg4LL0)
 
